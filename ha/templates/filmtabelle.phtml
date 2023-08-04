@@ -1,0 +1,59 @@
+<?php
+$ausgabe['titel'] = 'Filmtabelle';
+include TEMPLATES . 'htmlkopf.phtml';
+?>
+
+                    
+                    <h3><?= number_format($anzahl, 0, ',', '.') ?> Filme gefunden</h3>
+
+                    <table>
+                        <caption>
+                            <div>
+                                <div>
+                                    <form action="<?= $_SERVER['PHP_SELF'] ?>" name="suche" method="get">
+                                        <label for="suche">Suche nach Filmtitel</label>
+                                        <input type="text" name="suche" id="suche" value="<?= $suchstring ?>">
+                                        <button type="submit">suchen</button>
+                                    </form>
+                                </div>
+                                <div class="paginator">
+                                    <a href="<?= $_SERVER['PHP_SELF'] ?>?seite=1">&lt;&lt;</a>
+                                    <a href="<?= $_SERVER['PHP_SELF'] ?>?seite=<?= $_SESSION['filmdb_seite'] > 1 ? ($_SESSION['filmdb_seite'] - 1) : 1 ?>">&lt;</a>
+                                    <a href="<?= $_SERVER['PHP_SELF'] ?>?seite=<?= $_SESSION['filmdb_seite'] ?>"><?= $_SESSION['filmdb_seite'] ?> / <?= $seiten ?></a>
+                                    <a href="<?= $_SERVER['PHP_SELF'] ?>?seite=<?= $_SESSION['filmdb_seite'] < $seiten ? ($_SESSION['filmdb_seite'] + 1) : $seiten ?>">&gt;</a>
+                                    <a href="<?= $_SERVER['PHP_SELF'] ?>?seite=<?= $seiten ?>">&gt;&gt;</a>
+                                </div>
+                            </div>
+                        </caption>
+                        
+                        <?php 
+                        $ausgabe['spaltenanzahl'] = 9;
+                        include TEMPLATES . 'spaltenanzahl.phtml'; ?>
+                        
+                        <tr>
+                            <th><a href="<?= $_SERVER['PHP_SELF'] ?>?sort=id">ID</a></th>
+                            <th><a href="<?= $_SERVER['PHP_SELF'] ?>?sort=titel">Titel</a></th>
+                            <th><a href="<?= $_SERVER['PHP_SELF'] ?>?sort=filmreihe">Filmreihe</a></th>
+                            <th><a href="<?= $_SERVER['PHP_SELF'] ?>?sort=land">Land</a></th>
+                            <th><a href="<?= $_SERVER['PHP_SELF'] ?>?sort=premiere">Premiere</a></th>
+                            <th><a href="<?= $_SERVER['PHP_SELF'] ?>?sort=fsk">FSK</a></th>
+                            <th><a href="<?= $_SERVER['PHP_SELF'] ?>?sort=laufzeit">Laufzeit</a></th>
+                            <th>Plakat</th>
+                            <th colspan="2">&nbsp;</th>
+                        </tr>
+                        <?php foreach ($filme as $film): ?>
+                            <tr>
+                                <?php foreach ($film as $key => $value): ?>
+                                    <?php if ('plakat' == $key && !empty($value)): ?>
+                                        <td><img src="<?= BILDER . $value ?>" class="klein" alt="<?= $value ?>"></td>
+                                    <?php else: ?>
+                                        <td><?= $value ?></td>
+                                    <?php endif; ?>
+                                <?php endforeach; ?>      
+                                <td><a href="film_aendern.php?updateid=<?= $film['id'] ?>">bearbeiten</a></td>
+                                <td><a href="film_loeschen.php?loeschid=<?= $film['id'] ?>">löschen</a></td>
+                            </tr>
+                        <?php endforeach; ?>
+                    </table>
+  <?php
+include TEMPLATES . 'htmlfuss.phtml';

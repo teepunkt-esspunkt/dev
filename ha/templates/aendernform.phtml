@@ -1,0 +1,87 @@
+<?php
+/*
+ * Template für die Adressliste
+ * 
+ * Benötigte Variablen:
+ * 
+ * $ausgabe['form']   - Formulardaten
+ * $ausgabe['fehler'] - Fehlermeldungen
+ */
+// Seitentitel festlegen
+$ausgabe['titel'] = 'Ändern';
+include TEMPLATES . 'htmlkopf.phtml';
+?>
+            <?php if(!empty($ergebnis['id'])): ?>
+            <h3><span><?= $ergebnis['id'] ?></span></h3>
+            <h4><a href="filmliste.php">zurück zur Übersicht</a></h4>
+            <?php else: ?>
+            <form action="<?= $_SERVER['PHP_SELF'] ?>" method="post" enctype="multipart/form-data">
+                <input type="hidden" name="id" id="id" value="<?= $form['id'] ?>">
+                
+                <?php
+                $ausgabe['feldname'] = 'titel';
+                $ausgabe['beschriftung'] = 'Filmtitel';
+                $ausgabe['typ'] = 'text';
+                include TEMPLATES . 'inputfeld.phtml';
+                ?>
+                
+
+                <div>
+                    <label for="inhalt">Inhalt</label>
+                    <textarea name="inhalt" id="inhalt"><?= $form['inhalt'] ?></textarea>
+                    <span><?= $ergebnis['inhalt'] ?? '' ?></span>
+                </div>
+
+                <div>
+                    <label for="land" class="pflicht">Land</label>
+                    <select name="land" id="land">
+                        <option value="" label="Bitte auswählen"></option>
+                        <?php foreach($laender as $kuerzel => $land): ?>
+                        <option value="<?= $kuerzel ?>" <?= $kuerzel == $form['land'] ? 'selected' : '' ?>><?= $land ?></option>
+                        <?php endforeach; ?>
+                    </select>
+                    <span><?= $ergebnis['land'] ?? '' ?></span>
+                </div>
+
+                 <?php
+                $ausgabe['feldname'] = 'premiere';
+                $ausgabe['beschriftung'] = 'Premiere';
+                $ausgabe['typ'] = 'date';
+                include TEMPLATES . 'inputfeld.phtml';   
+                ?>
+
+                <div>
+                    <label for="fsk">FSK</label>
+                    <select name="fsk" id="fsk">
+                        <option value="null">unbekannt</option>
+                        <option value="0"  <?= '0'  === $form['fsk'] ? 'selected' : '' ?>>0</option>
+                        <option value="6"  <?= '6'  === $form['fsk'] ? 'selected' : '' ?>>6</option>
+                        <option value="12" <?= '12' === $form['fsk'] ? 'selected' : '' ?>>12</option>
+                        <option value="16" <?= '16' === $form['fsk'] ? 'selected' : '' ?>>16</option>
+                        <option value="18" <?= '18' === $form['fsk'] ? 'selected' : '' ?>>18</option>
+                    </select>
+                    <span><?= $ergebnis['fsk'] ?? '' ?></span>
+                </div>
+                
+                        <?php
+                $ausgabe['feldname'] = 'laufzeit';
+                $ausgabe['beschriftung'] = 'Laufzeit';
+                $ausgabe['typ'] = 'text';
+                include TEMPLATES . 'inputfeld.phtml';
+                ?>
+
+                <div>
+                    <label for="plakat">Filmplakat</label>
+                    <input type="file" accept="image/jpeg" name="plakat" id="plakat">
+                    <span><?= $ergebnis['plakat'] ?? '' ?></span>
+                </div>
+
+                <div>
+                    <button type="submit" name="okbutton" value="1">speichern</button>
+                </div>
+
+                <div class='formcaption'>Felder in <span class='pflicht'>blau</span> sind Pflichtfelder</div>
+            </form>
+            <?php endif; ?>
+       <?php
+include TEMPLATES . 'htmlfuss.phtml';
