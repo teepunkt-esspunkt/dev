@@ -3,7 +3,7 @@ require_once 'functions.php';
 
 
 // Anzahl anzuzeigender Adressen pro Seite
-const PROSEITE = 20;
+const PROSEITE = 25;
 
 // Starten der Session
 session_start();
