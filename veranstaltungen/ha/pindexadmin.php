@@ -1,4 +1,5 @@
 <?php
+
 require_once 'functions.php';
 
 // Anzahl anzuzeigender Adressen pro Seite
@@ -7,23 +8,23 @@ const PROSEITE = 3;
 // Starten der Session
 session_start();
 
-
 // Standardwerte für Sessionvariablen setzen
 
-$_SESSION['veranstaltungen_sort']         = $_SESSION['veranstaltungen_sort']  ?? 'vid';
-$_SESSION['veranstaltungen_dest']         = $_SESSION['veranstaltungen_dest']  ?? 'ASC';
-$_SESSION['veranstaltungen_seite']        = $_SESSION['veranstaltungen_seite'] ?? '1';
-$_SESSION['veranstaltungen_datum']        = $_SESSION['veranstaltungen_datum'] ?? '';
-$_SESSION['veranstaltungen_plz_von']      = $_SESSION['veranstaltungen_plz_von'] ?? '';
-$_SESSION['veranstaltungen_plz_bis']      = $_SESSION['veranstaltungen_plz_bis'] ?? '';
-$_SESSION['veranstaltungen_kosten_von']   = $_SESSION['veranstaltungen_kosten_von'] ?? '';
-$_SESSION['veranstaltungen_kosten_bis']   = $_SESSION['veranstaltungen_kosten_bis'] ?? '';
-$_SESSION['veranstaltungen_name']         = $_SESSION['veranstaltungen_name'] ?? '';
-$_SESSION['veranstaltungen_beschreibung'] = $_SESSION['veranstaltungen_beschreibung'] ?? '';
-$_SESSION['veranstaltungen_ort']          = $_SESSION['veranstaltungen_ort'] ?? '';
-$_SESSION['veranstaltungen_stadt']        = $_SESSION['veranstaltungen_stadt'] ?? '';
-$_SESSION['veranstaltungen_adresse']      = $_SESSION['veranstaltungen_adresse'] ?? '';
+$_SESSION['veranstaltungen_sort']           = $_SESSION['veranstaltungen_sort']         ?? 'vid';
+$_SESSION['veranstaltungen_dest']           = $_SESSION['veranstaltungen_dest']         ?? 'ASC';
+$_SESSION['veranstaltungen_seite']          = $_SESSION['veranstaltungen_seite']        ?? '1';
+$_SESSION['veranstaltungen_datum']          = $_SESSION['veranstaltungen_datum']        ?? '';
+$_SESSION['veranstaltungen_plz_von']        = $_SESSION['veranstaltungen_plz_von']      ?? '';
+$_SESSION['veranstaltungen_plz_bis']        = $_SESSION['veranstaltungen_plz_bis']      ?? '';
+$_SESSION['veranstaltungen_kosten_von']     = $_SESSION['veranstaltungen_kosten_von']   ?? '';
+$_SESSION['veranstaltungen_kosten_bis']     = $_SESSION['veranstaltungen_kosten_bis']   ?? '';
+$_SESSION['veranstaltungen_name']           = $_SESSION['veranstaltungen_name']         ?? '';
+$_SESSION['veranstaltungen_beschreibung']   = $_SESSION['veranstaltungen_beschreibung'] ?? '';
+$_SESSION['veranstaltungen_ort']            = $_SESSION['veranstaltungen_ort']          ?? '';
+$_SESSION['veranstaltungen_stadt']          = $_SESSION['veranstaltungen_stadt']        ?? '';
+$_SESSION['veranstaltungen_adresse']        = $_SESSION['veranstaltungen_adresse']      ?? '';
 
+// Suche fuer Admin
 $suche_besucher = [
     'name' => $_GET['name'] ?? '',
     'beschreibung' => $_GET['beschreibung'] ?? '',
@@ -35,7 +36,6 @@ $suche_besucher = [
     'datum' => $_GET['datum'] ?? ''
 ];
 
-
 /** @var array für die Veranstaltungsdaten */
 $veranstaltungen = [];
 
@@ -43,10 +43,6 @@ $veranstaltungen = [];
 $fehler = [];
 
 $ausgabe['veranstaltungen'] = [];
-
-
-
-
 
 /*
  *  Suchformular auswerten und die WHERE-Klausel für die Abfrage erstellen
@@ -139,7 +135,7 @@ $db = dbConnect();
 
 /** @var string $where  Abfragebedingung für die Suche */
 $name = mysqli_escape_string($db, $_SESSION['veranstaltungen_name']);
-$ort  = mysqli_escape_string($db, $_SESSION['veranstaltungen_ort']);
+$ort = mysqli_escape_string($db, $_SESSION['veranstaltungen_ort']);
 $plz_von = mysqli_escape_string($db, $_SESSION['veranstaltungen_plz_von']);
 $plz_bis = mysqli_escape_string($db, $_SESSION['veranstaltungen_plz_bis']);
 $stadt = mysqli_escape_string($db, $_SESSION['veranstaltungen_stadt']);
@@ -172,6 +168,7 @@ $anzahl = 0;
 
 //SQL-Statement zum Ermitteln der Anzahl der gefundenen Einträge
 //$sql = "SELECT vid FROM veranstaltungen $where";
+
 $sql = "SELECT vid FROM veranstaltungen LEFT JOIN orte ON veranstaltungen.oid = orte.oid $where_klausel";
 
 // SQL-Statement an die Datenbank schicken und Ergebnis (Resultset) in $result speichern
@@ -209,7 +206,7 @@ $sql = <<<EOT
            veranstaltungen.name,
            orte.ort,
            orte.plz,
-           DATE_FORMAT(datum, '%d.%m.%Y') AS datum,
+           DATE_FORMAT(datum, '%d.%m.%Y') AS datumm,
            CONCAT(LEFT(beschreibung, 40), IF(CHAR_LENGTH(beschreibung)>40,'...','')) AS beschreibung,
            orte.adresse,
            orte.stadt
@@ -220,9 +217,8 @@ $sql = <<<EOT
         $limit
              
 EOT;
-
-
-
+dump($sql);
+//    WHERE datum >= CURRENT_DATE
 
 
 // SQL-Statement an die Datenbank schicken und Ergebnis (Resultset) in $result speichern
@@ -233,7 +229,7 @@ if ($result = mysqli_query($db, $sql)) {
         foreach ($veranstaltung as $key => $value) {
             $veranstaltung[$key] = htmlspecialchars($value);
         }
-        
+
         $veranstaltungen[] = $veranstaltung;
     }
 
@@ -261,8 +257,7 @@ $suchstring_datum = htmlspecialchars($_SESSION['veranstaltungen_datum']);
 
 $suchstring_stadt = htmlspecialchars($_SESSION['veranstaltungen_stadt']);
 
-
-   $ausgabe['titel'] = "Adminbereich Tabelle";
-  $ausgabe['spaltenanzahl'] = 10;
-  $ausgabe['admin'] =   1;
+$ausgabe['titel'] = "Adminbereich Tabelle";
+$ausgabe['spaltenanzahl'] = 10;
+$ausgabe['admin'] = 1;
 include TEMPLATES . 'veranstaltungstabelleulti.phtml';

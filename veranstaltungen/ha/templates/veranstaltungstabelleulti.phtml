@@ -4,7 +4,7 @@
  * 
  * $ausgabe['titel'] = Name der HTML Ueberschrift
  * $ausgabe['spaltenzahl'] = Anzahl der Spalten
- * $ausgabe['admin'] =   1 - + bearbeiten und loeschen buttons, bitte Spaltenzahl bedenken
+ * $ausgabe['admin'] =   1 = + bearbeiten und loeschen buttons, bitte Spaltenzahl bedenken 0 = Besucher Ansicht
  */
 
 
@@ -36,7 +36,7 @@ include TEMPLATES . 'htmlkopf.phtml';
         <th><a href="<?= $_SERVER['PHP_SELF'] ?>?sort=datum">Datum</a></th>
 
 <th><a href="<?= $_SERVER['PHP_SELF'] ?>?sort=beschreibung">Beschreibung</a></th>
-        <th><a href="<?= $_SERVER['PHP_SELF'] ?>?sort=strasse">Strasse</a></th>
+        <th><a href="<?= $_SERVER['PHP_SELF'] ?>?sort=adresse">Adresse</a></th>
         <th><a href="<?= $_SERVER['PHP_SELF'] ?>?sort=stadt">Stadt</a></th>
 
 
