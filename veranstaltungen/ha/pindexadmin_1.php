@@ -24,24 +24,12 @@ $_SESSION['veranstaltungen_ort']          = $_SESSION['veranstaltungen_ort'] ?? 
 $_SESSION['veranstaltungen_stadt']        = $_SESSION['veranstaltungen_stadt'] ?? '';
 $_SESSION['veranstaltungen_adresse']      = $_SESSION['veranstaltungen_adresse'] ?? '';
 
-$suche_besucher = [
-    'name' => $_GET['name'] ?? '',
-    'beschreibung' => $_GET['beschreibung'] ?? '',
-    'ort' => $_GET['ort'] ?? '',
-    'stadt' => $_GET['stadt'] ?? '',
-    'adresse' => $_GET['adresse'] ?? '',
-    'plz_von' => $_GET['plz_von'] ?? '',
-    'plz_bis' => $_GET['plz_bis'] ?? '',
-    'datum' => $_GET['datum'] ?? ''
-];
-
-
 /** @var array für die Veranstaltungsdaten */
 $veranstaltungen = [];
 
 //Array für etwaige Fehler
 $fehler = [];
-
+$name = [];
 $ausgabe['veranstaltungen'] = [];
 
 
@@ -139,40 +127,14 @@ $db = dbConnect();
 
 /** @var string $where  Abfragebedingung für die Suche */
 $name = mysqli_escape_string($db, $_SESSION['veranstaltungen_name']);
-$ort  = mysqli_escape_string($db, $_SESSION['veranstaltungen_ort']);
-$plz_von = mysqli_escape_string($db, $_SESSION['veranstaltungen_plz_von']);
-$plz_bis = mysqli_escape_string($db, $_SESSION['veranstaltungen_plz_bis']);
-$stadt = mysqli_escape_string($db, $_SESSION['veranstaltungen_stadt']);
-$beschreibung = mysqli_escape_string($db, $_SESSION['veranstaltungen_beschreibung']);
-$datum = mysqli_escape_string($db, $_SESSION['veranstaltungen_datum']);
+$where = $_SESSION['veranstaltungen_name'] ? "WHERE name LIKE '%$name%'" : '';
 
-$where_array = [];
-foreach ($suche_besucher as $key => $value) {
-    if (!empty($value)) {
-        if ($key === 'name') {
-            $escape = mysqli_real_escape_string($db, $value);
-            $where_array[] = "(name LIKE '%$escape%' OR beschreibung LIKE '%$escape%')";
-        } elseif ($key === 'plz_von') {
-            $where_array[] = "plz BETWEEN '" . mysqli_real_escape_string($db, $value) . "' AND ";
-        } elseif ($key === 'plz_bis') {
-            $where_array[count($whereConditions) - 1] .= "'" . mysqli_real_escape_string($db, $value) . "'";
-        } else {
-            $escape = mysqli_real_escape_string($db, $value);
-            $where_array[] = "$key LIKE '%$escape%'";
-        }
-    }
-}
-
-$where_klausel = '';
-if (!empty($where_array)) {
-    $where_klausel = 'WHERE ' . implode(' AND ', $where_array);
-}
 
 $anzahl = 0;
 
 //SQL-Statement zum Ermitteln der Anzahl der gefundenen Einträge
 //$sql = "SELECT vid FROM veranstaltungen $where";
-$sql = "SELECT vid FROM veranstaltungen LEFT JOIN orte ON veranstaltungen.oid = orte.oid $where_klausel";
+$sql = "SELECT vid FROM veranstaltungen";
 
 // SQL-Statement an die Datenbank schicken und Ergebnis (Resultset) in $result speichern
 if ($result = mysqli_query($db, $sql)) {
@@ -189,7 +151,7 @@ if ($result = mysqli_query($db, $sql)) {
 $seiten = ceil($anzahl / PROSEITE);
 
 // aktuelle Seite prüfen
-$_SESSION['veranstaltungen_seite'] = max(min($_SESSION['veranstaltungen_seite'], $seiten), 1);
+//$_SESSION['veranstaltungen_seite'] = max(min($_SESSION['veranstaltungen_seite'], $seiten), 1);
 
 /** @var int $offset  Offset für anzuzeigende Datensätze */
 $offset = ($_SESSION['veranstaltungen_seite'] - 1) * PROSEITE;
@@ -210,12 +172,11 @@ $sql = <<<EOT
            orte.ort,
            orte.plz,
            DATE_FORMAT(datum, '%d.%m.%Y') AS datum,
-           CONCAT(LEFT(beschreibung, 40), IF(CHAR_LENGTH(beschreibung)>40,'...','')) AS beschreibung,
+           veranstaltungen.beschreibung,
            orte.adresse,
            orte.stadt
     FROM veranstaltungen
     LEFT JOIN orte ON veranstaltungen.oid = orte.oid
-        
                 $order          
         $limit
              

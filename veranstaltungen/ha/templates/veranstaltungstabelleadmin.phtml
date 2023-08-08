@@ -9,7 +9,7 @@ include TEMPLATES . 'htmlkopf.phtml';
 <table>
     <caption>
         <div>
-            <?php//  include TEMPLATES . 'einfache_suche.phtml'; ?>
+            <?php  include TEMPLATES . 'einfache_suche.phtml'; ?>
             <?php include TEMPLATES . 'paginator.phtml'; ?>
         </div>
     </caption>
@@ -27,7 +27,7 @@ include TEMPLATES . 'htmlkopf.phtml';
         <th><a href="<?= $_SERVER['PHP_SELF'] ?>?sort=plz">PLZ</a></th>
         <th><a href="<?= $_SERVER['PHP_SELF'] ?>?sort=datum">Datum</a></th>
 
-<th>&nbsp;</th>
+<th><a href="<?= $_SERVER['PHP_SELF'] ?>?sort=beschreibung">Beschreibung</a></th>
         <th><a href="<?= $_SERVER['PHP_SELF'] ?>?sort=strasse">Strasse</a></th>
         <th><a href="<?= $_SERVER['PHP_SELF'] ?>?sort=stadt">Stadt</a></th>
 
