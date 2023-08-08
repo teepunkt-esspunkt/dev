@@ -261,4 +261,8 @@ $suchstring_datum = htmlspecialchars($_SESSION['veranstaltungen_datum']);
 
 $suchstring_stadt = htmlspecialchars($_SESSION['veranstaltungen_stadt']);
 
-include TEMPLATES . 'veranstaltungstabelle.phtml'; 
+
+  $ausgabe['titel'] = "Besucherbereich Tabelle";
+  $ausgabe['spaltenanzahl'] = 8;
+  $ausgabe['admin'] =   0;
+include TEMPLATES . 'veranstaltungstabelleulti.phtml'; 

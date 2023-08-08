@@ -57,6 +57,6 @@ include TEMPLATES . 'htmlkopf.phtml';
                 <?php endforeach; ?>
             </table>
             <h3><a href="veranstaltung_hinzufuegen.php">Weitere Veranstaltung erfassen</a></h3>
-            <h3><a href="pindex.php">Veranstaltungen anzeigen</a></h3>
+            <h3><a href="pindexadmin.php">Veranstaltungen anzeigen</a></h3>
   <?php
 include TEMPLATES . 'htmlfuss.phtml';

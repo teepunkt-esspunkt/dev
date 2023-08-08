@@ -215,12 +215,12 @@ $sql = <<<EOT
            orte.stadt
     FROM veranstaltungen
     LEFT JOIN orte ON veranstaltungen.oid = orte.oid
-        
+        $where_klausel
                 $order          
         $limit
              
 EOT;
-//    $where
+
 
 
 
@@ -247,6 +247,22 @@ if ($result = mysqli_query($db, $sql)) {
 mysqli_close($db);
 
 // Suchtext für Ausgabe im Formular escapen
-$suchstring = htmlspecialchars($_SESSION['veranstaltungen_name']);
+$suchstring_name = htmlspecialchars($_SESSION['veranstaltungen_name']);
 
-include TEMPLATES . 'veranstaltungstabelleadmin.phtml';
+$suchstring_ort = htmlspecialchars($_SESSION['veranstaltungen_ort']);
+
+$suchstring_beschreibung = htmlspecialchars($_SESSION['veranstaltungen_beschreibung']);
+
+$suchstring_plz_von = htmlspecialchars($_SESSION['veranstaltungen_plz_von']);
+
+$suchstring_plz_bis = htmlspecialchars($_SESSION['veranstaltungen_plz_bis']);
+
+$suchstring_datum = htmlspecialchars($_SESSION['veranstaltungen_datum']);
+
+$suchstring_stadt = htmlspecialchars($_SESSION['veranstaltungen_stadt']);
+
+
+   $ausgabe['titel'] = "Adminbereich Tabelle";
+  $ausgabe['spaltenanzahl'] = 10;
+  $ausgabe['admin'] =   1;
+include TEMPLATES . 'veranstaltungstabelleulti.phtml';
