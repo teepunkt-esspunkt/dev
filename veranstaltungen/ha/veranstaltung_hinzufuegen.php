@@ -1,6 +1,10 @@
 <?php
 require_once 'functions.php';
+require_once 'functions_veranstaltungen.php';
+
+
 session_start();
+$orte = getOrte();
 /** @var string[] $form alle Formularfelder */
 $form = [];
 

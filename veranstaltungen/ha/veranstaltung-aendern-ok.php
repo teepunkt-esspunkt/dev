@@ -56,7 +56,7 @@ include TEMPLATES . 'htmlkopf.phtml';
                 </tr>
                 <?php endforeach; ?>
             </table>
-            <h3><a href="pindex.php">Veranstaltungen anzeigen</a></h3>
+            <h3><a href="pindexadmin.php">Veranstaltungen anzeigen</a></h3>
   <?php
 include TEMPLATES . 'htmlfuss.phtml';
 ?>

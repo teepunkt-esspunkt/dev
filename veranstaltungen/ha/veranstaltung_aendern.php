@@ -11,7 +11,7 @@ $form = [];
 $updateid = !empty($_GET['updateid']) ? intval(trim($_GET['updateid'])) : 0;
 
 /** @var string[] $orte  Array mit allen Orten (Locations) */
-//$orte = getOrte();
+$orte = getOrte();
 
 /*
  *  Prüfen, ob ID zum Ändern übergeben wurde und ob ID korrekt ist

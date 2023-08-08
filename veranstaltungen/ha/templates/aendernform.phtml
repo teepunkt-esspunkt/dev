@@ -17,19 +17,16 @@ include TEMPLATES . 'htmlkopf.phtml';
         include TEMPLATES . 'inputfeld.phtml';
         ?>
 
-
+        <!--        Ort als Selectbox-->
         <div>
-            <label for="beschreibung">Beschreibung</label>
-            <textarea name="beschreibung" id="beschreibung"><?= $form['beschreibung'] ?></textarea>
-            <span><?= $ergebnis['beschreibung'] ?? '' ?></span>
+            <label for="oid">Ort</label>
+            <select name="oid" id="oid">
+                <option value="" label="Ort auswählen"></option>
+                <?php foreach ($orte as $key => $value): ?>
+                    <option value="<?= $key ?>" <?= $key == $form['oid'] ? 'selected' : '' ?>><?= $value ?></option>
+                <?php endforeach; ?>
+            </select>
         </div>
-
-        <?php
-        $ausgabe['feldname'] = 'oid';
-        $ausgabe['beschriftung'] = 'Veranstaltungsort';
-        $ausgabe['typ'] = 'text';
-        include TEMPLATES . 'inputfeld.phtml';
-        ?>
 
 
         <?php
@@ -38,7 +35,11 @@ include TEMPLATES . 'htmlkopf.phtml';
         $ausgabe['typ'] = 'date';
         include TEMPLATES . 'inputfeld.phtml';
         ?>
-
+        <div>
+            <label for="beschreibung">Beschreibung</label>
+            <textarea name="beschreibung" id="beschreibung"><?= $form['beschreibung'] ?></textarea>
+            <span><?= $ergebnis['beschreibung'] ?? '' ?></span>
+        </div>
         <div>
             <button type="submit" name="okbutton" value="1">speichern</button>
         </div>             

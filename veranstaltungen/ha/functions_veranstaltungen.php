@@ -56,7 +56,7 @@ function getOrte()
     $orte = [];
 
     // SQL-Statement erzeugen
-    $sql = "SELECT * FROM ort ORDER BY ort ASC";
+    $sql = "SELECT * FROM orte ORDER BY oid ASC";
 
     // SQL-Statement an die Datenbank schicken und Ergebnis (Resultset) in $result speichern
     if($result = mysqli_query($db, $sql)) {

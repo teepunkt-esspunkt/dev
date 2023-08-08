@@ -14,7 +14,7 @@
 ?>
 <div>
     <label for="<?= $ausgabe['feldname'] ?>"><?= $ausgabe['beschriftung'] ?></label>
-    <input type="<?= $ausgabe['typ'] ?>" name="<?= $ausgabe['feldname'] ?>" id="<?= $ausgabe['feldname'] ?>" value="<?= $form[$ausgabe['feldname']] ?>">
+    <input type="<?= $ausgabe['typ'] ?>" name="<?= $ausgabe['feldname'] ?>" id="<?= htmlspecialchars($ausgabe['feldname']) ?>" value="<?= $form[$ausgabe['feldname']] ?>">
     <span><?= $ausgabe['fehler'][$ausgabe['feldname']] ?? '' ?></span>
 </div>
 

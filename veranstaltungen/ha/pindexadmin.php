@@ -126,15 +126,10 @@ if (isset($_GET['seite'])) {
 $db = dbConnect();
 
 /** @var string $where  Abfragebedingung für die Suche */
-//$name = mysqli_escape_string($db, $_SESSION['veranstaltungen_name']);
-//$where = $_SESSION['veranstaltungen_name'] ? "WHERE name LIKE '%$name%'" : '';
+$name = mysqli_escape_string($db, $_SESSION['veranstaltungen_name']);
+$where = $_SESSION['veranstaltungen_name'] ? "WHERE name LIKE '%$name%'" : '';
 
 
-
-/*
- * Gesamtzahl gefundener Datensätze ermitteln
- */
-/** @var int $anzahl  Anzahl gefundener Datensätze */
 $anzahl = 0;
 
 //SQL-Statement zum Ermitteln der Anzahl der gefundenen Einträge
@@ -159,16 +154,16 @@ $seiten = ceil($anzahl / PROSEITE);
 //$_SESSION['veranstaltungen_seite'] = max(min($_SESSION['veranstaltungen_seite'], $seiten), 1);
 
 /** @var int $offset  Offset für anzuzeigende Datensätze */
-//$offset = ($_SESSION['veranstaltungen_seite'] - 1) * PROSEITE;
+$offset = ($_SESSION['veranstaltungen_seite'] - 1) * PROSEITE;
 
 // LIMIT-Klausel erstellen
-//$limit = "LIMIT $offset, " . PROSEITE;
+$limit = "LIMIT $offset, " . PROSEITE;
 
 /*
  * Gespeicherte Daten aus der Datenbank lesen
  */
 // Sortierung formulieren
-//$order = "ORDER BY {$_SESSION['veranstaltungen_sort']} {$_SESSION['veranstaltungen_dest']}";
+$order = "ORDER BY {$_SESSION['veranstaltungen_sort']} {$_SESSION['veranstaltungen_dest']}";
 
 //SQL-Statement zum Lesen der anzuzeigenden Einträge
 $sql = <<<EOT
@@ -182,8 +177,13 @@ $sql = <<<EOT
            orte.stadt
     FROM veranstaltungen
     LEFT JOIN orte ON veranstaltungen.oid = orte.oid
-    
+                $order          
+        $limit
 EOT;
+//        $where
+
+
+
 
 // SQL-Statement an die Datenbank schicken und Ergebnis (Resultset) in $result speichern
 if ($result = mysqli_query($db, $sql)) {
@@ -207,6 +207,6 @@ if ($result = mysqli_query($db, $sql)) {
 mysqli_close($db);
 
 // Suchtext für Ausgabe im Formular escapen
-//$suchstring = htmlspecialchars($_SESSION['veranstaltungen_name']);
+$suchstring = htmlspecialchars($_SESSION['veranstaltungen_name']);
 
 include TEMPLATES . 'veranstaltungstabelleadmin.phtml';
