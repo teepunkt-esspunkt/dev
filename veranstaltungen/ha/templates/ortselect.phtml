@@ -1,0 +1,26 @@
+<?php 
+/*
+ * Template für ein Input-Feld type='text' oder type='date'
+ * 
+ * Benötigte Variablen:
+ * 
+ * $ausgabe['typ']          - Typ des Feldes
+ * $ausgabe['feldname']     - Name und ID des Feldes
+ * $ausgabe['beschriftung'] - Inhalt des Label-Elements
+ * $ausgabe['fehler']       - Fehlermeldungen
+ * 
+ * 
+ */
+?>
+            <div>
+                <label for="oid">Ort</label>
+                <select name="oid" id="oid">
+                    <option value="" label="Ort auswählen"></option>
+                  
+                    <?php foreach($orte as $key => $value): ?>
+                    <option value="<?= $key ?>" <?= $key == $form['oid'] ? 'selected' : '' ?>><?= $value ?></option>
+                    <?php endforeach; ?>
+                </select>
+                <span><?= $fehler['ort'] ?? '' ?></span>
+            </div>
+

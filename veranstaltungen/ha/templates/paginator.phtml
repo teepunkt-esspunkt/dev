@@ -1,0 +1,22 @@
+<?php 
+/*
+ * Template für ein Input-Feld type='text' oder type='date'
+ * 
+ * Benötigte Variablen:
+ * 
+ * $ausgabe['typ']          - Typ des Feldes
+ * $ausgabe['feldname']     - Name und ID des Feldes
+ * $ausgabe['beschriftung'] - Inhalt des Label-Elements
+ * $ausgabe['fehler']       - Fehlermeldungen
+ * 
+ * 
+ */
+?>
+
+<div class="paginator">
+                <a href="<?= $_SERVER['PHP_SELF'] ?>?seite=1">&lt;&lt;</a>
+                <a href="<?= $_SERVER['PHP_SELF'] ?>?seite=<?= $_SESSION['veranstaltungen_seite'] > 1 ? ($_SESSION['veranstaltungen_seite'] - 1) : 1 ?>">&lt;</a>
+                <a href="<?= $_SERVER['PHP_SELF'] ?>?seite=<?= $_SESSION['veranstaltungen_seite'] ?>"><?= $_SESSION['veranstaltungen_seite'] ?> / <?= $seiten ?></a>
+                <a href="<?= $_SERVER['PHP_SELF'] ?>?seite=<?= $_SESSION['veranstaltungen_seite'] < $seiten ? ($_SESSION['veranstaltungen_seite'] + 1) : $seiten ?>">&gt;</a>
+                <a href="<?= $_SERVER['PHP_SELF'] ?>?seite=<?= $seiten ?>">&gt;&gt;</a>
+            </div>

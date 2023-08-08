@@ -1,0 +1,38 @@
+<?php
+/*
+ * Template für den HTML-Kopf
+ * 
+ * Benötigte Variablen:
+ * 
+ * $ausgabe['titel'] - Titel & Überschrift der Seite
+ */
+
+require_once 'functions.php';
+?>
+<!DOCTYPE html>
+<html lang="de">
+    <head>
+        <title><?= $ausgabe['titel'] ?></title>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link href="base.css" rel="stylesheet">
+    </head>
+    <body>
+         <div id="wrapper">
+            <nav id="top">
+                <ul>
+                    <li><a href = "">Home</a></li>
+                </ul>
+                <ul>
+                    <li><a href = "">Kontakt |</a></li>
+                    <li><a href = "">Impressum</a></li>
+                </ul>
+            </nav>
+            <main>
+                <nav id="left">
+                    <ul>
+                        <?php meineLinkeNavBarLeiste(); ?>
+                    </ul>
+                </nav>
+                <article>
+        <h1><?= $ausgabe['titel'] ?></h1>

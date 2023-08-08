@@ -1,0 +1,56 @@
+<?php
+$ausgabe['titel'] = 'Tabelle';
+include TEMPLATES . 'htmlkopf.phtml';
+?>
+
+                    
+                    <h3><?= number_format($anzahl, 0, ',', '.') ?> Veranstaltungen gefunden</h3>
+
+                    <table>
+                        <caption>
+                            <div>
+                                <div>
+                                    <form action="<?= $_SERVER['PHP_SELF'] ?>" name="suche" method="get">
+                                        <label for="suche">Suche nach Veranstaltung</label>
+                                        <input type="text" name="suche" id="suche" value="<?= $suchstring ?>">
+                                        <button type="submit">suchen</button>
+                                    </form>
+                                </div>
+                                <div class="paginator">
+                                    <a href="<?= $_SERVER['PHP_SELF'] ?>?seite=1">&lt;&lt;</a>
+                                    <a href="<?= $_SERVER['PHP_SELF'] ?>?seite=<?= $_SESSION['veranstaltungen_seite'] > 1 ? ($_SESSION['veranstaltungen_seite'] - 1) : 1 ?>">&lt;</a>
+                                    <a href="<?= $_SERVER['PHP_SELF'] ?>?seite=<?= $_SESSION['veranstaltungen_seite'] ?>"><?= $_SESSION['veranstaltungen_seite'] ?> / <?= $seiten ?></a>
+                                    <a href="<?= $_SERVER['PHP_SELF'] ?>?seite=<?= $_SESSION['veranstaltungen_seite'] < $seiten ? ($_SESSION['veranstaltungen_seite'] + 1) : $seiten ?>">&gt;</a>
+                                    <a href="<?= $_SERVER['PHP_SELF'] ?>?seite=<?= $seiten ?>">&gt;&gt;</a>
+                                </div>
+                            </div>
+                        </caption>
+                        
+                        <?php 
+                        $ausgabe['spaltenanzahl'] = 9;
+                        include TEMPLATES . 'spaltenanzahl.phtml'; ?>
+                        
+                        <tr>
+                            <th><a href="<?= $_SERVER['PHP_SELF'] ?>?sort=vid">ID</a></th>
+                            <th><a href="<?= $_SERVER['PHP_SELF'] ?>?sort=name">Titel</a></th>
+                            
+                            <th><a href="<?= $_SERVER['PHP_SELF'] ?>?sort=ort">Land</a></th>
+                            <th><a href="<?= $_SERVER['PHP_SELF'] ?>?sort=tag">Premiere</a></th>
+                            
+                            
+                            <th colspan="2">&nbsp;</th>
+                        </tr>
+                        <?php foreach ($veranstaltungen as $veranstaltung): ?>
+                            <tr>
+                                <?php foreach ($veranstaltung as $key => $value): ?>
+                                    
+                                        <td><?= $value ?></td>
+                                 
+                                <?php endforeach; ?>      
+                                <td><a href="veranstaltung_aendern.php?updateid=<?= $veranstaltung['vid'] ?>">bearbeiten</a></td>
+                                <td><a href="veranstaltung_loeschen.php?loeschid=<?= $veranstaltung['vid'] ?>">löschen</a></td>
+                            </tr>
+                        <?php endforeach; ?>
+                    </table>
+  <?php
+include TEMPLATES . 'htmlfuss.phtml';

@@ -1,0 +1,20 @@
+<?php 
+/*
+ * Template für ein Input-Feld type='text' oder type='date'
+ * 
+ * Benötigte Variablen:
+ * 
+ * $ausgabe['typ']          - Typ des Feldes
+ * $ausgabe['feldname']     - Name und ID des Feldes
+ * $ausgabe['beschriftung'] - Inhalt des Label-Elements
+ * $ausgabe['fehler']       - Fehlermeldungen
+ * 
+ * 
+ */
+?>
+
+<div>
+                <label for="<?= $ausgabe['feldname'] ?>"><?= $ausgabe['beschriftung'] ?></label>
+                <input type="<?= $ausgabe['typ'] ?>" name="<?= $ausgabe['feldname'] ?>" id="<?= $ausgabe['feldname'] ?>" value="<?= $form[$ausgabe['feldname']] ?>"><br>
+                <span><?= $fehler[$ausgabe['feldname']] ?? '' ?></span>
+            </div>

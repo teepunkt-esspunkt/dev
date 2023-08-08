@@ -1,0 +1,48 @@
+<?php
+// Seitentitel festlegen
+$ausgabe['titel'] = 'Ändern';
+include TEMPLATES . 'htmlkopf.phtml';
+?>
+<?php if (!empty($ergebnis['vid'])): ?>
+    <h3><span><?= $ergebnis['vid'] ?></span></h3>
+    <h4><a href="pindex.php">zurück zur Übersicht</a></h4>
+<?php else: ?>
+    <form action="<?= $_SERVER['PHP_SELF'] ?>" method="post">
+        <input type="hidden" name="vid" id="vid" value="<?= $form['vid'] ?>">
+
+        <?php
+        $ausgabe['feldname'] = 'name';
+        $ausgabe['beschriftung'] = 'Veranstaltung';
+        $ausgabe['typ'] = 'text';
+        include TEMPLATES . 'inputfeld.phtml';
+        ?>
+
+
+        <div>
+            <label for="beschreibung">Beschreibung</label>
+            <textarea name="beschreibung" id="beschreibung"><?= $form['beschreibung'] ?></textarea>
+            <span><?= $ergebnis['beschreibung'] ?? '' ?></span>
+        </div>
+
+        <?php
+        $ausgabe['feldname'] = 'oid';
+        $ausgabe['beschriftung'] = 'Veranstaltungsort';
+        $ausgabe['typ'] = 'text';
+        include TEMPLATES . 'inputfeld.phtml';
+        ?>
+
+
+        <?php
+        $ausgabe['feldname'] = 'datum';
+        $ausgabe['beschriftung'] = 'Veranstaltungstag';
+        $ausgabe['typ'] = 'date';
+        include TEMPLATES . 'inputfeld.phtml';
+        ?>
+
+        <div>
+            <button type="submit" name="okbutton" value="1">speichern</button>
+        </div>             
+    </form>
+<?php endif; ?>
+<?php
+include TEMPLATES . 'htmlfuss.phtml';

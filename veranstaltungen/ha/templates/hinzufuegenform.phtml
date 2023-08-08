@@ -1,0 +1,45 @@
+<?php
+
+$ausgabe['titel'] = 'Veranstaltung Hinzufügen';
+include TEMPLATES . 'htmlkopf.phtml';
+
+?>
+<form action="<?= $_SERVER['PHP_SELF'] ?>" method="post">
+<input type="hidden" name="vid" id="vid" value="<?= $form['vid'] ?>">
+
+    <?php
+
+    $ausgabe['beschriftung'] = 'Veranstaltung';
+    $ausgabe['feldname'] = 'name';
+    $ausgabe['typ'] = 'text';
+    include TEMPLATES . 'inputfeldadd.phtml';
+    
+    
+    // INTO SELECTBOX
+    $ausgabe['feldname'] = 'oid';
+    $ausgabe['beschriftung'] = 'Orts ID';
+    $ausgabe['typ'] = 'text';
+    include TEMPLATES . 'inputfeldadd.phtml';
+
+    $ausgabe['beschriftung'] = 'Datum';
+    $ausgabe['feldname'] = 'datum';
+    $ausgabe['typ'] = 'date';
+    include TEMPLATES . 'inputfeldadd.phtml';
+    
+    // Beschreibung bitte nach unten fuer die Aesthetik!
+    ?>
+    <div>
+        <label for="beschreibung">Beschreibung</label>
+        <textarea name="beschreibung" id="beschreibung"><?= htmlspecialchars($form['beschreibung']) ?></textarea>
+        <span><?= $fehler['beschreibung'] ?? '' ?></span>
+    </div>
+
+
+    <div>
+        <button type="submit" name="okbutton" value="1">speichern</button>
+    </div>
+
+<!--            <div class='formcaption'>Felder in <span class='pflicht'>blau</span> sind Pflichtfelder</div>-->
+    <?php
+    include TEMPLATES . 'htmlfuss.phtml';
+    
