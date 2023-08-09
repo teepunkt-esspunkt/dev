@@ -5,7 +5,7 @@ require_once 'functions_veranstaltungen.php';
 $detailsid = !empty($_GET['detailsid']) ? intval(trim($_GET['detailsid'])) : 0;
 
 /** @var string $loeschok  Löschbestätigung */
-//$loeschok = $_GET['loeschok'] ?? false;
+//$detailsok = $_GET['detailsid'] ?? false;
 
 
 /** @var string $ergebnis  Fehlermeldung */
@@ -21,7 +21,7 @@ if(0 < $detailsid && veranstaltungExist($detailsid)) {
     $db = dbConnect(); 
 
     // Prüfen, ob Löschbestätigung gegeben wurde
-    if(!$detailsid) {
+    if($detailsid) {
         /*
          * Erfasste Daten aus der Datenbank lesen,
          * wenn noch keine Löschbestätigung gegeben wurde
@@ -33,7 +33,7 @@ if(0 < $detailsid && veranstaltungExist($detailsid)) {
            orte.ort,
            orte.plz,
            DATE_FORMAT(datum, '%d.%m.%Y') AS datumm,
-           CONCAT(LEFT(beschreibung, 80), IF(CHAR_LENGTH(beschreibung)>80,'...','')) AS beschreibung,
+           beschreibung,
            orte.adresse,
            orte.stadt       
     FROM veranstaltungen
@@ -61,10 +61,10 @@ EOT;
     // Verbindung zur Datenbank trennen
     mysqli_close($db);
 }
-elseif(!$detailsid) {
-    // Datensatz-ID wurde nicht übergeben
-    $ergebnis = 'Datensatz-ID fehlt!';
-}
+//elseif(!$detailsid) {
+//    // Datensatz-ID wurde nicht übergeben
+//    $ergebnis = 'Datensatz-ID fehlt!';
+//}
 else {
     // Datensatz mit dieser ID existiert nicht
     $ergebnis = 'Ungültige Datensatz-ID!';
@@ -74,11 +74,16 @@ include TEMPLATES . 'htmlkopf.phtml';
 ?>
 
             <?php if($ergebnis): ?>
-            <h3><span><?= $ergebnis ?></span></h3>
+                <?php if(!veranstaltungExist($detailsid)): ?>
+                    
+               
+            <h4><span>Ungültige ID</span></h4>
+              <?php       endif; ?>
             
             
             <?php else: ?>
-            <h4><span>Ungültige ID</span></h4>
+            <h3><span><?= $ergebnis ?></span></h3>
+            
             
             <table>
                 <?php foreach($veranstaltung as $name => $wert): ?>
