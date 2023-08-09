@@ -7,6 +7,7 @@ const PROSEITE = 3;
 // Starten der Session
 session_start();
 
+
 // Standardwerte für Sessionvariablen setzen
 
 $_SESSION['veranstaltungen_sort']         = $_SESSION['veranstaltungen_sort']  ?? 'vid';
@@ -15,12 +16,13 @@ $_SESSION['veranstaltungen_seite']        = $_SESSION['veranstaltungen_seite'] ?
 $_SESSION['veranstaltungen_datum']        = $_SESSION['veranstaltungen_datum'] ?? '';
 $_SESSION['veranstaltungen_plz_von']      = $_SESSION['veranstaltungen_plz_von'] ?? '';
 $_SESSION['veranstaltungen_plz_bis']      = $_SESSION['veranstaltungen_plz_bis'] ?? '';
+$_SESSION['veranstaltungen_kosten_von']   = $_SESSION['veranstaltungen_kosten_von'] ?? '';
+$_SESSION['veranstaltungen_kosten_bis']   = $_SESSION['veranstaltungen_kosten_bis'] ?? '';
 $_SESSION['veranstaltungen_name']         = $_SESSION['veranstaltungen_name'] ?? '';
 $_SESSION['veranstaltungen_beschreibung'] = $_SESSION['veranstaltungen_beschreibung'] ?? '';
 $_SESSION['veranstaltungen_ort']          = $_SESSION['veranstaltungen_ort'] ?? '';
 $_SESSION['veranstaltungen_stadt']        = $_SESSION['veranstaltungen_stadt'] ?? '';
 $_SESSION['veranstaltungen_adresse']      = $_SESSION['veranstaltungen_adresse'] ?? '';
-
 
 $suche_besucher = [
     'name' => $_GET['name'] ?? '',
@@ -36,15 +38,15 @@ $suche_besucher = [
 /** @var array für die Veranstaltungsdaten */
 $veranstaltungen = [];
 
-//Array für etwaige Fehler
+//Array für etwaige Fehler (siehe isset Block)
 $fehler = [];
-
-$ausgabe['veranstaltungen'] = [];
 
 /*
  *  Suchformular auswerten und die WHERE-Klausel für die Abfrage erstellen
- */
-/** @var string $suche  Als Parameter übergebener Suchstring für das Titelfeld */
+ * Suchfilter bei plz eingefügt zum Testen und beibehalten zum etwaigen erweitern später
+ * wobei Besucher ja nichts in die Datenbank eintragen und trotz Fehleingaben sollen u.U. Ergebnisse angezeigt werden
+ */ 
+
 if (isset($_GET['name'])) {
     $_SESSION['veranstaltungen_name'] = trim(strip_tags($_GET['name']));
     $_SESSION['veranstaltungen_seite'] = '1';
@@ -73,18 +75,37 @@ if (isset($_GET['adresse'])) {
     $_SESSION['veranstaltungen_adresse'] = trim(strip_tags($_GET['adresse']));
     $_SESSION['veranstaltungen_seite'] = '1';
 }
-
+// pregmatch mit Regex um die Zahlen von 1 bis 5 stellig zu erlauben
 if (isset($_GET['plz_von'])) {
-    $_SESSION['veranstaltungen_plz_von'] = trim(strip_tags($_GET['plz_von']));
-    $_SESSION['veranstaltungen_seite'] = '1';
+    $plz_von = trim(strip_tags($_GET['plz_von']));
+    if (preg_match('/^\d{1,5}$/', $plz_von)) {
+        $_SESSION['veranstaltungen_plz_von'] = $plz_von;
+        $_SESSION['veranstaltungen_seite'] = '1';
+    } else {
+        $fehler['plz_von'] = 'Bitte gültige Postleitzahl eingeben';
+    }
 }
-
 
 if (isset($_GET['plz_bis'])) {
-    $_SESSION['veranstaltungen_plz_bis'] = trim(strip_tags($_GET['plz_bis']));
+    $plz_bis = trim(strip_tags($_GET['plz_bis']));
+    if (preg_match('/^\d{1,5}$/', $plz_bis)) {
+        $_SESSION['veranstaltungen_plz_bis'] = $plz_bis;
+        $_SESSION['veranstaltungen_seite'] = '1';
+    } else {
+        $fehler['plz_bis'] = 'Bitte gültige Postleitzahl eingeben';
+    }
+}
+
+
+if (isset($_GET['kosten_von'])) {
+    $_SESSION['veranstaltungen_kosten_von'] = trim(strip_tags($_GET['kosten_von']));
     $_SESSION['veranstaltungen_seite'] = '1';
 }
 
+if (isset($_GET['kosten_bis'])) {
+    $_SESSION['veranstaltungen_kosten_bis'] = trim(strip_tags($_GET['kosten_bis']));
+    $_SESSION['veranstaltungen_seite'] = '1';
+}
 
 if (isset($_GET['datum'])) {
     $_SESSION['veranstaltungen_datum'] = trim(strip_tags($_GET['datum']));
@@ -97,10 +118,10 @@ if (isset($_GET['datum'])) {
 if (isset($_GET['sort'])) {
     $sort = trim(strip_tags($_GET['sort']));
     // übergebene Sortierung prüfen
-    $felder = ['vid', 'name', 'beschreibung', 'datum', 'ort', 'adresse', 'stadt'];
+    $felder = ['vid', 'name', 'beschreibung', 'datum', 'kosten', 'ort', 'adresse', 'stadt'];
     $sort = in_array($sort, $felder) ? $sort : 'vid';
 
-    // Prüfen, ob alte Sortierung der neuen entspricht, dann Richtung umdrehen
+    // Prüfen, ob alte Sortierung der neuen entspricht, dann die Richtung umdrehen
     if ($sort == $_SESSION['veranstaltungen_sort']) {
         $_SESSION['veranstaltungen_dest'] = 'ASC' == $_SESSION['veranstaltungen_dest'] ? 'DESC' : 'ASC';
     } else {
@@ -120,36 +141,38 @@ if (isset($_GET['seite'])) {
 // Verbindung zur Datenbank aufbauen
 $db = dbConnect();
 
-/** @var string $where  Abfragebedingung für die Suchen */
-$name = mysqli_escape_string($db, $_SESSION['veranstaltungen_name']);
-$ort  = mysqli_escape_string($db, $_SESSION['veranstaltungen_ort']);
-$plz_von = mysqli_escape_string($db, $_SESSION['veranstaltungen_plz_von']);
-$plz_bis = mysqli_escape_string($db, $_SESSION['veranstaltungen_plz_bis']);
-$stadt = mysqli_escape_string($db, $_SESSION['veranstaltungen_stadt']);
-$beschreibung = mysqli_escape_string($db, $_SESSION['veranstaltungen_beschreibung']);
-$datum = mysqli_escape_string($db, $_SESSION['veranstaltungen_datum']);
-
+// Die Where Klausel als Array wird durch die Schleife befüllt, Sonderbedingungen für PLZ werden hier deklariert
 $where_array = [];
 foreach ($suche_besucher as $key => $value) {
     if (!empty($value)) {
         if ($key === 'name') {
             $escape = mysqli_real_escape_string($db, $value);
             $where_array[] = "(name LIKE '%$escape%' OR beschreibung LIKE '%$escape%')";
-        } elseif ($key === 'plz_von') {
-            $where_array[] = "plz BETWEEN '" . ($value) . "' AND ";
-        } elseif ($key === 'plz_bis') {
-            $where_array[count($where_array) - 1] .= "'" . mysqli_real_escape_string($db, $value) . "'";
-        } else {
+        } elseif ($key === 'plz_von' && !empty($suche_besucher['plz_bis'])) {
+            $plz_von = mysqli_real_escape_string($db, $value);
+            $plz_bis = mysqli_real_escape_string($db, $suche_besucher['plz_bis']);
+            $where_array[] = "plz BETWEEN '$plz_von' AND '$plz_bis'";
+        } elseif ($key === 'plz_von' && empty($suche_besucher['plz_bis'])) {
+            $plz_von = mysqli_real_escape_string($db, $value);
+            $where_array[] = "plz >= '$plz_von'";
+        } elseif ($key === 'plz_bis' && empty($suche_besucher['plz_von'])) {
+            $plz_bis = mysqli_real_escape_string($db, $value);
+            $where_array[] = "plz <= '$plz_bis'";
+        } elseif ($key !== 'plz_bis') {
             $escape = mysqli_real_escape_string($db, $value);
             $where_array[] = "$key LIKE '%$escape%'";
         }
     }
 }
 
+
+// Die Where Klausel holt sich per implode die Werte aus dem Array und verknüpft sie
 $where_klausel = '';
 if (!empty($where_array)) {
     $where_klausel = 'AND ' . implode(' AND ', $where_array);
 }
+
+
 
 /*
  * Gesamtzahl gefundener Datensätze ermitteln
@@ -159,6 +182,7 @@ $anzahl = 0;
 
 //SQL-Statement zum Ermitteln der Anzahl der gefundenen Einträge
 $sql = "SELECT vid FROM veranstaltungen LEFT JOIN orte ON veranstaltungen.oid = orte.oid WHERE datum >= CURRENT_DATE $where_klausel";
+// ehemaliger Dumpplatz zur Fehlersuche im SQL, jetzt durch diesen Kommentar ersetzt
 
 // SQL-Statement an die Datenbank schicken und Ergebnis (Resultset) in $result speichern
 if ($result = mysqli_query($db, $sql)) {
@@ -190,6 +214,7 @@ $limit = "LIMIT $offset, " . PROSEITE;
 $order = "ORDER BY {$_SESSION['veranstaltungen_sort']} {$_SESSION['veranstaltungen_dest']}";
 
 //SQL-Statement zum Lesen der anzuzeigenden Einträge
+// WHERE datum >= CURRENT_DATE um vergangene Termine dem Besucher nicht anzuzeigen
 $sql = <<<EOT
     SELECT veranstaltungen.vid,
            veranstaltungen.name,
@@ -228,6 +253,7 @@ if ($result = mysqli_query($db, $sql)) {
 mysqli_close($db);
 
 // Suchtext für Ausgabe im Formular escapen
+// htmplspecialchars zur Sicherheit
 $suchstring_name = htmlspecialchars($_SESSION['veranstaltungen_name']);
 
 $suchstring_ort = htmlspecialchars($_SESSION['veranstaltungen_ort']);
