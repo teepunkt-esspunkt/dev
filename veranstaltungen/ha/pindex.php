@@ -165,7 +165,7 @@ foreach ($suche_besucher as $key => $value) {
 // Combine conditions using "AND"
 $where_klausel = '';
 if (!empty($where_array)) {
-    $where_klausel = 'WHERE ' . implode(' AND ', $where_array);
+    $where_klausel = 'AND ' . implode(' AND ', $where_array);
 }
 
 
@@ -177,7 +177,7 @@ if (!empty($where_array)) {
 $anzahl = 0;
 
 //SQL-Statement zum Ermitteln der Anzahl der gefundenen Einträge
-$sql = "SELECT vid FROM veranstaltungen LEFT JOIN orte ON veranstaltungen.oid = orte.oid $where_klausel";
+$sql = "SELECT vid FROM veranstaltungen LEFT JOIN orte ON veranstaltungen.oid = orte.oid WHERE datum >= CURRENT_DATE $where_klausel";
 
 // SQL-Statement an die Datenbank schicken und Ergebnis (Resultset) in $result speichern
 if ($result = mysqli_query($db, $sql)) {
@@ -215,11 +215,11 @@ $sql = <<<EOT
            orte.ort,
            orte.plz,
            DATE_FORMAT(datum, '%d.%m.%Y') AS datum,
-           veranstaltungen.beschreibung,
            orte.adresse,
            orte.stadt
     FROM veranstaltungen
     LEFT JOIN orte ON veranstaltungen.oid = orte.oid
+        WHERE datum >= CURRENT_DATE
     $where_klausel
     $order
     $limit
@@ -263,6 +263,6 @@ $suchstring_stadt = htmlspecialchars($_SESSION['veranstaltungen_stadt']);
 
 
   $ausgabe['titel'] = "Besucherbereich Tabelle";
-  $ausgabe['spaltenanzahl'] = 8;
+  $ausgabe['spaltenanzahl'] = 7;
   $ausgabe['admin'] =   0;
 include TEMPLATES . 'veranstaltungstabelleulti.phtml'; 

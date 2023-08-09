@@ -33,7 +33,9 @@ include TEMPLATES . 'htmlkopf.phtml';
         <th><a href="<?= $_SERVER['PHP_SELF'] ?>?sort=ort">Ort</a></th>
         <th><a href="<?= $_SERVER['PHP_SELF'] ?>?sort=plz">PLZ</a></th>
         <th><a href="<?= $_SERVER['PHP_SELF'] ?>?sort=datum">Datum</a></th>
+        <?php if($ausgabe['admin']): ?>
         <th><a href="<?= $_SERVER['PHP_SELF'] ?>?sort=beschreibung">Beschreibung</a></th>
+        <?php endif; ?>
         <th><a href="<?= $_SERVER['PHP_SELF'] ?>?sort=adresse">Adresse</a></th>
         <th><a href="<?= $_SERVER['PHP_SELF'] ?>?sort=stadt">Stadt</a></th>
         <?php if($ausgabe['admin']): ?>
