@@ -2,7 +2,7 @@
 /**
  * Tabellen Template, anpassbar
  * 
- * $ausgabe['titel'] = Name der HTML Ueberschrift
+ * $ausgabe['titel'] = Name der HTML Ueberschrift, in ""
  * $ausgabe['spaltenzahl'] = Anzahl der Spalten
  * $ausgabe['admin'] =   1 = + bearbeiten und loeschen buttons, bitte Spaltenzahl bedenken 0 = Besucher Ansicht
  */
@@ -30,15 +30,17 @@ include TEMPLATES . 'htmlkopf.phtml';
     <tr>
         <th><a href="<?= $_SERVER['PHP_SELF'] ?>?sort=vid">ID</a></th>
         <th><a href="<?= $_SERVER['PHP_SELF'] ?>?sort=name">Name</a></th>
-
         <th><a href="<?= $_SERVER['PHP_SELF'] ?>?sort=ort">Ort</a></th>
         <th><a href="<?= $_SERVER['PHP_SELF'] ?>?sort=plz">PLZ</a></th>
         <th><a href="<?= $_SERVER['PHP_SELF'] ?>?sort=datum">Datum</a></th>
-
-<th><a href="<?= $_SERVER['PHP_SELF'] ?>?sort=beschreibung">Beschreibung</a></th>
+        <th><a href="<?= $_SERVER['PHP_SELF'] ?>?sort=beschreibung">Beschreibung</a></th>
         <th><a href="<?= $_SERVER['PHP_SELF'] ?>?sort=adresse">Adresse</a></th>
         <th><a href="<?= $_SERVER['PHP_SELF'] ?>?sort=stadt">Stadt</a></th>
-
+        <?php if($ausgabe['admin']): ?>
+            
+        
+        <th colspan="2"> &nbsp; </th>
+<?php endif; ?>
 
         
     </tr>
@@ -62,19 +64,19 @@ include TEMPLATES . 'htmlkopf.phtml';
 </table>
             <div>
                 <form action="<?= $_SERVER['PHP_SELF'] ?>" name="suche" method="get">
-                    <label for="suche">Name</label>
+                    <label for="name">Name</label>
                     <input type="text" name="name" id="name" value="<?= $suchstring_name ?>">
                     
-                    <label for="suche">Ort</label>
+                    <label for="ort">Ort</label>
                     <input type="text" name="ort" id="ort" value="<?= $suchstring_ort ?>">
                     
-                    <label for="suche">PLZ von</label>
+                    <label for="plz_von">PLZ von</label>
                     <input type="text" name="plz_von" id="plz_von" value="<?= $suchstring_plz_von ?>">
                     
-                    <label for="suche">PLZ bis</label>
+                    <label for="plz_bis">PLZ bis</label>
                     <input type="text" name="plz_bis" id="plz_bis" value="<?= $suchstring_plz_bis ?>">
                     
-                    <label for="suche">Datum</label>
+                    <label for="datum">Datum</label>
                     <input type="date" name="datum" id="datum" value="<?= $suchstring_datum ?>">
                     
                     

@@ -5,7 +5,7 @@ include TEMPLATES . 'htmlkopf.phtml';
 ?>
 <?php if (!empty($ergebnis['vid'])): ?>
     <h3><span><?= $ergebnis['vid'] ?></span></h3>
-    <h4><a href="pindex.php">zurück zur Übersicht</a></h4>
+    <h4><a href="pindexadmin.php">zurück zur Übersicht</a></h4>
 <?php else: ?>
     <form action="<?= $_SERVER['PHP_SELF'] ?>" method="post">
         <input type="hidden" name="vid" id="vid" value="<?= $form['vid'] ?>">

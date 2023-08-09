@@ -26,14 +26,14 @@ $_SESSION['veranstaltungen_adresse']        = $_SESSION['veranstaltungen_adresse
 
 // Suche fuer Admin
 $suche_besucher = [
-    'name' => $_GET['name'] ?? '',
-    'beschreibung' => $_GET['beschreibung'] ?? '',
-    'ort' => $_GET['ort'] ?? '',
-    'stadt' => $_GET['stadt'] ?? '',
-    'adresse' => $_GET['adresse'] ?? '',
-    'plz_von' => $_GET['plz_von'] ?? '',
-    'plz_bis' => $_GET['plz_bis'] ?? '',
-    'datum' => $_GET['datum'] ?? ''
+    'name'          => $_GET['name']            ?? '',
+    'beschreibung'  => $_GET['beschreibung']    ?? '',
+    'ort'           => $_GET['ort']             ?? '',
+    'stadt'         => $_GET['stadt']           ?? '',
+    'adresse'       => $_GET['adresse']         ?? '',
+    'plz_von'       => $_GET['plz_von']         ?? '',
+    'plz_bis'       => $_GET['plz_bis']         ?? '',
+    'datum'         => $_GET['datum']           ?? ''
 ];
 
 /** @var array für die Veranstaltungsdaten */
@@ -166,9 +166,6 @@ if (!empty($where_array)) {
 
 $anzahl = 0;
 
-//SQL-Statement zum Ermitteln der Anzahl der gefundenen Einträge
-//$sql = "SELECT vid FROM veranstaltungen $where";
-
 $sql = "SELECT vid FROM veranstaltungen LEFT JOIN orte ON veranstaltungen.oid = orte.oid $where_klausel";
 
 // SQL-Statement an die Datenbank schicken und Ergebnis (Resultset) in $result speichern
@@ -194,9 +191,6 @@ $offset = ($_SESSION['veranstaltungen_seite'] - 1) * PROSEITE;
 // LIMIT-Klausel erstellen
 $limit = "LIMIT $offset, " . PROSEITE;
 
-/*
- * Gespeicherte Daten aus der Datenbank lesen
- */
 // Sortierung formulieren
 $order = "ORDER BY {$_SESSION['veranstaltungen_sort']} {$_SESSION['veranstaltungen_dest']}";
 
@@ -207,32 +201,27 @@ $sql = <<<EOT
            orte.ort,
            orte.plz,
            DATE_FORMAT(datum, '%d.%m.%Y') AS datumm,
-           CONCAT(LEFT(beschreibung, 40), IF(CHAR_LENGTH(beschreibung)>40,'...','')) AS beschreibung,
+           CONCAT(LEFT(beschreibung, 80), IF(CHAR_LENGTH(beschreibung)>80,'...','')) AS beschreibung,
            orte.adresse,
-           orte.stadt
+           orte.stadt       
     FROM veranstaltungen
     LEFT JOIN orte ON veranstaltungen.oid = orte.oid
         $where_klausel
-                $order          
+        $order          
         $limit
              
 EOT;
-dump($sql);
-//    WHERE datum >= CURRENT_DATE
 
 
 // SQL-Statement an die Datenbank schicken und Ergebnis (Resultset) in $result speichern
 if ($result = mysqli_query($db, $sql)) {
-
     while ($veranstaltung = mysqli_fetch_assoc($result)) {
         // Felder für die Ausgabe in HTML-Seite vorbereiten
         foreach ($veranstaltung as $key => $value) {
             $veranstaltung[$key] = htmlspecialchars($value);
         }
-
         $veranstaltungen[] = $veranstaltung;
     }
-
     // Resultset freigeben
     mysqli_free_result($result);
 } else {

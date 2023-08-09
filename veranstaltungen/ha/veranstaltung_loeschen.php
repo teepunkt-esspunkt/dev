@@ -112,5 +112,5 @@ include TEMPLATES . 'htmlkopf.phtml';
             </form>
             
             <?php endif; ?>
-            <h3><a href="pindex.php">zurück zur Liste</a></h3>
+            <h3><a href="pindexadmin.php">zurück zur Liste</a></h3>
        <?php

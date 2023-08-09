@@ -2,8 +2,6 @@
 require_once 'functions.php';
 require_once 'functions_veranstaltungen.php';
 
-
-
 /** @var string[] $form alle Formularfelder */
 $form = [];
 
@@ -27,8 +25,8 @@ if (0 < $updateid && veranstaltungExist($updateid)) {
         SELECT vid,
             name,
             beschreibung,
-           datum,
-           oid
+            datum,
+            oid
         FROM veranstaltungen 
         WHERE vid = $updateid
 EOT;
@@ -52,7 +50,7 @@ EOT;
 /*
  * Prüfen, ob Formular abgeschickt wurde
  * Falls ja, dann weitere Prüfungen durchführen
- */ elseif (!empty($_POST['okbutton'])) {
+ */ else{
 
     /** @var string[] $ergebnis Fehlermeldungen für Formularfelder */
     $ergebnis = [];
@@ -166,4 +164,5 @@ EOT;
         }
     }
 }
+
 include TEMPLATES . 'aendernform.phtml';

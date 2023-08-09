@@ -1,9 +1,0 @@
-
-<div>
-                <form action="<?= $_SERVER['PHP_SELF'] ?>" name="suche" method="get">
-                    <label for="suche">Suche nach Veranstaltung</label>
-<!--                    ohne htmlspecialchars "verschwinden" einige zeichen wie "<>" aber es wurde schon ge-htmlspecialchar'd-->
-                    <input type="text" name="name" id="name" value="<?= htmlspecialchars($suchstring) ?>">
-                    <button type="submit">suchen</button>
-                </form>
-            </div>
