@@ -154,7 +154,7 @@ foreach ($suche_besucher as $key => $value) {
         } elseif ($key === 'plz_von') {
             $where_array[] = "plz BETWEEN '" . mysqli_real_escape_string($db, $value) . "' AND ";
         } elseif ($key === 'plz_bis') {
-            $where_array[count($whereConditions) - 1] .= "'" . mysqli_real_escape_string($db, $value) . "'";
+            $where_array[count($where_array) - 1] .= "'" . mysqli_real_escape_string($db, $value) . "'";
         } else {
             $escape = mysqli_real_escape_string($db, $value);
             $where_array[] = "$key LIKE '%$escape%'";
