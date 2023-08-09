@@ -96,6 +96,17 @@ if (isset($_GET['plz_bis'])) {
     }
 }
 
+
+if (isset($_GET['kosten_von'])) {
+    $_SESSION['veranstaltungen_kosten_von'] = trim(strip_tags($_GET['kosten_von']));
+    $_SESSION['veranstaltungen_seite'] = '1';
+}
+
+if (isset($_GET['kosten_bis'])) {
+    $_SESSION['veranstaltungen_kosten_bis'] = trim(strip_tags($_GET['kosten_bis']));
+    $_SESSION['veranstaltungen_seite'] = '1';
+}
+
 if (isset($_GET['datum'])) {
     $_SESSION['veranstaltungen_datum'] = trim(strip_tags($_GET['datum']));
     $_SESSION['veranstaltungen_seite'] = '1';
@@ -209,7 +220,7 @@ $sql = <<<EOT
            veranstaltungen.name,
            orte.ort,
            orte.plz,
-           DATE_FORMAT(datum, '%d.%m.%Y') AS termin,
+           DATE_FORMAT(datum, '%d.%m.%Y') AS datum,
            orte.adresse,
            orte.stadt
     FROM veranstaltungen

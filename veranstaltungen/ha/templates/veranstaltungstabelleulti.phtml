@@ -67,7 +67,7 @@ include TEMPLATES . 'htmlkopf.phtml';
             <div>
                 <form action="<?= $_SERVER['PHP_SELF'] ?>" name="suche" method="get">
                     <label for="name">Name</label>
-                    <input type="text" name="name" id="name" value="<?= $suchstring_name ?>">
+                    <input type="text" class="name" name="name" id="name" value="<?= $suchstring_name ?>">
                     
                     <label for="ort">Ort</label>
                     <input type="text" name="ort" id="ort" value="<?= $suchstring_ort ?>">
@@ -82,8 +82,9 @@ include TEMPLATES . 'htmlkopf.phtml';
                     <input type="date" name="datum" id="datum" value="<?= $suchstring_datum ?>">
                     
                     
-                    
-                    <button type="submit">suchen</button>
+                    <div class="okknopf">  
+                    <button type="submit" class="okknopf">suchen</button>
+                    </div>
                 </form>
             </div>
 <?php

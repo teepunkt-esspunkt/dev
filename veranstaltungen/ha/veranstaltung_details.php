@@ -32,7 +32,7 @@ if(0 < $detailsid && veranstaltungExist($detailsid)) {
            veranstaltungen.name,
            orte.ort,
            orte.plz,
-           DATE_FORMAT(datum, '%d.%m.%Y') AS datumm,
+           DATE_FORMAT(datum, '%d.%m.%Y') AS termin,
            beschreibung,
            orte.adresse,
            orte.stadt       

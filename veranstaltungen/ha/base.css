@@ -203,7 +203,7 @@ fieldset label {
 }
 textarea {
 	margin-top: 10px;
-    width: 300px;
+    width: 250px;
 }
 .pflicht {
     color: blue;
@@ -236,7 +236,7 @@ form {
 	width: 30em;
 	margin: 1.5em auto 0.5em;
 	border: 1px solid maroon;
-	background-color: floralwhite;
+	background-color: aqua;
 	padding: 1.5em;
 }
 
@@ -255,4 +255,10 @@ img.gross {
 }
 img.klein {
     max-width: 80px;
+}
+.name{
+    margin-left: 20px;
+}
+div.okknopf {
+  margin-left: 20px;
 }
