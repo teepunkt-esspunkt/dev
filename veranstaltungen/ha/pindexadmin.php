@@ -14,8 +14,8 @@ $_SESSION['veranstaltungen_sort']           = $_SESSION['veranstaltungen_sort'] 
 $_SESSION['veranstaltungen_dest']           = $_SESSION['veranstaltungen_dest']         ?? 'ASC';
 $_SESSION['veranstaltungen_seite']          = $_SESSION['veranstaltungen_seite']        ?? '1';
 $_SESSION['veranstaltungen_datum']          = $_SESSION['veranstaltungen_datum']        ?? '';
-$_SESSION['veranstaltungen_plz_von']        = $_SESSION['veranstaltungen_plz_von']      ?? '';
-$_SESSION['veranstaltungen_plz_bis']        = $_SESSION['veranstaltungen_plz_bis']      ?? '';
+$_SESSION['veranstaltungen_plz_von']        = $_SESSION['veranstaltungen_plz_von']      ?? '1';
+$_SESSION['veranstaltungen_plz_bis']        = $_SESSION['veranstaltungen_plz_bis']      ?? '*';
 $_SESSION['veranstaltungen_kosten_von']     = $_SESSION['veranstaltungen_kosten_von']   ?? '';
 $_SESSION['veranstaltungen_kosten_bis']     = $_SESSION['veranstaltungen_kosten_bis']   ?? '';
 $_SESSION['veranstaltungen_name']           = $_SESSION['veranstaltungen_name']         ?? '';
@@ -31,8 +31,8 @@ $suche_besucher = [
     'ort'           => $_GET['ort']             ?? '',
     'stadt'         => $_GET['stadt']           ?? '',
     'adresse'       => $_GET['adresse']         ?? '',
-    'plz_von'       => $_GET['plz_von']         ?? '',
-    'plz_bis'       => $_GET['plz_bis']         ?? '',
+    'plz_von'       => $_GET['plz_von']         ?? '1',
+    'plz_bis'       => $_GET['plz_bis']         ?? '*',
     'datum'         => $_GET['datum']           ?? ''
 ];
 
@@ -149,7 +149,7 @@ foreach ($suche_besucher as $key => $value) {
             $escape = mysqli_real_escape_string($db, $value);
             $where_array[] = "(name LIKE '%$escape%' OR beschreibung LIKE '%$escape%')";
         } elseif ($key === 'plz_von') {
-            $where_array[] = "plz BETWEEN '" . mysqli_real_escape_string($db, $value) . "' AND ";
+            $where_array[] = "plz BETWEEN '" . ($value) . "' AND ";
         } elseif ($key === 'plz_bis') {
             $where_array[count($where_array) - 1] .= "'" . mysqli_real_escape_string($db, $value) . "'";
         } else {
@@ -163,11 +163,12 @@ $where_klausel = '';
 if (!empty($where_array)) {
     $where_klausel = 'WHERE ' . implode(' AND ', $where_array);
 }
-
+dump($where_klausel);
 $anzahl = 0;
 
 $sql = "SELECT vid FROM veranstaltungen LEFT JOIN orte ON veranstaltungen.oid = orte.oid $where_klausel";
 
+dump($sql);
 // SQL-Statement an die Datenbank schicken und Ergebnis (Resultset) in $result speichern
 if ($result = mysqli_query($db, $sql)) {
     // Anzahl der Treffer ermitteln
@@ -195,6 +196,7 @@ $limit = "LIMIT $offset, " . PROSEITE;
 $order = "ORDER BY {$_SESSION['veranstaltungen_sort']} {$_SESSION['veranstaltungen_dest']}";
 
 //SQL-Statement zum Lesen der anzuzeigenden Einträge
+dump($sql);
 $sql = <<<EOT
     SELECT veranstaltungen.vid,
            veranstaltungen.name,
@@ -211,7 +213,7 @@ $sql = <<<EOT
         $limit
              
 EOT;
-
+dump($sql);
 
 // SQL-Statement an die Datenbank schicken und Ergebnis (Resultset) in $result speichern
 if ($result = mysqli_query($db, $sql)) {
