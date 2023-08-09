@@ -50,7 +50,7 @@ include TEMPLATES . 'htmlkopf.phtml';
         <tr>
     <?php foreach ($veranstaltung as $key => $value): ?>
             <?php if($key == 'name'): ?>
-            <td><a href=""><?= $value ?></a></td>
+            <td><a href="veranstaltung_details.php?detailsid=<?= $veranstaltung['vid'] ?>"><?= $value ?></a></td>
                 <?php else: ?>
                 <td><?= $value ?></td>
                 <?php endif; ?>

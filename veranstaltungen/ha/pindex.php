@@ -7,7 +7,6 @@ const PROSEITE = 3;
 // Starten der Session
 session_start();
 
-
 // Standardwerte für Sessionvariablen setzen
 
 $_SESSION['veranstaltungen_sort']         = $_SESSION['veranstaltungen_sort']  ?? 'vid';
@@ -16,13 +15,12 @@ $_SESSION['veranstaltungen_seite']        = $_SESSION['veranstaltungen_seite'] ?
 $_SESSION['veranstaltungen_datum']        = $_SESSION['veranstaltungen_datum'] ?? '';
 $_SESSION['veranstaltungen_plz_von']      = $_SESSION['veranstaltungen_plz_von'] ?? '';
 $_SESSION['veranstaltungen_plz_bis']      = $_SESSION['veranstaltungen_plz_bis'] ?? '';
-$_SESSION['veranstaltungen_kosten_von']   = $_SESSION['veranstaltungen_kosten_von'] ?? '';
-$_SESSION['veranstaltungen_kosten_bis']   = $_SESSION['veranstaltungen_kosten_bis'] ?? '';
 $_SESSION['veranstaltungen_name']         = $_SESSION['veranstaltungen_name'] ?? '';
 $_SESSION['veranstaltungen_beschreibung'] = $_SESSION['veranstaltungen_beschreibung'] ?? '';
 $_SESSION['veranstaltungen_ort']          = $_SESSION['veranstaltungen_ort'] ?? '';
 $_SESSION['veranstaltungen_stadt']        = $_SESSION['veranstaltungen_stadt'] ?? '';
 $_SESSION['veranstaltungen_adresse']      = $_SESSION['veranstaltungen_adresse'] ?? '';
+
 
 $suche_besucher = [
     'name' => $_GET['name'] ?? '',
@@ -42,10 +40,6 @@ $veranstaltungen = [];
 $fehler = [];
 
 $ausgabe['veranstaltungen'] = [];
-
-
-
-
 
 /*
  *  Suchformular auswerten und die WHERE-Klausel für die Abfrage erstellen
@@ -92,16 +86,6 @@ if (isset($_GET['plz_bis'])) {
 }
 
 
-if (isset($_GET['kosten_von'])) {
-    $_SESSION['veranstaltungen_kosten_von'] = trim(strip_tags($_GET['kosten_von']));
-    $_SESSION['veranstaltungen_seite'] = '1';
-}
-
-if (isset($_GET['kosten_bis'])) {
-    $_SESSION['veranstaltungen_kosten_bis'] = trim(strip_tags($_GET['kosten_bis']));
-    $_SESSION['veranstaltungen_seite'] = '1';
-}
-
 if (isset($_GET['datum'])) {
     $_SESSION['veranstaltungen_datum'] = trim(strip_tags($_GET['datum']));
     $_SESSION['veranstaltungen_seite'] = '1';
@@ -113,7 +97,7 @@ if (isset($_GET['datum'])) {
 if (isset($_GET['sort'])) {
     $sort = trim(strip_tags($_GET['sort']));
     // übergebene Sortierung prüfen
-    $felder = ['vid', 'name', 'beschreibung', 'datum', 'kosten', 'ort', 'adresse', 'stadt'];
+    $felder = ['vid', 'name', 'beschreibung', 'datum', 'ort', 'adresse', 'stadt'];
     $sort = in_array($sort, $felder) ? $sort : 'vid';
 
     // Prüfen, ob alte Sortierung der neuen entspricht, dann Richtung umdrehen
@@ -152,7 +136,7 @@ foreach ($suche_besucher as $key => $value) {
             $escape = mysqli_real_escape_string($db, $value);
             $where_array[] = "(name LIKE '%$escape%' OR beschreibung LIKE '%$escape%')";
         } elseif ($key === 'plz_von') {
-            $where_array[] = "plz BETWEEN '" . mysqli_real_escape_string($db, $value) . "' AND ";
+            $where_array[] = "plz BETWEEN '" . ($value) . "' AND ";
         } elseif ($key === 'plz_bis') {
             $where_array[count($where_array) - 1] .= "'" . mysqli_real_escape_string($db, $value) . "'";
         } else {
@@ -162,13 +146,10 @@ foreach ($suche_besucher as $key => $value) {
     }
 }
 
-// Combine conditions using "AND"
 $where_klausel = '';
 if (!empty($where_array)) {
     $where_klausel = 'AND ' . implode(' AND ', $where_array);
 }
-
-
 
 /*
  * Gesamtzahl gefundener Datensätze ermitteln

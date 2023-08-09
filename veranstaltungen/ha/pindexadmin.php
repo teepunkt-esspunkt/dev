@@ -1,5 +1,4 @@
 <?php
-
 require_once 'functions.php';
 
 // Anzahl anzuzeigender Adressen pro Seite
@@ -14,10 +13,8 @@ $_SESSION['veranstaltungen_sort']           = $_SESSION['veranstaltungen_sort'] 
 $_SESSION['veranstaltungen_dest']           = $_SESSION['veranstaltungen_dest']         ?? 'ASC';
 $_SESSION['veranstaltungen_seite']          = $_SESSION['veranstaltungen_seite']        ?? '1';
 $_SESSION['veranstaltungen_datum']          = $_SESSION['veranstaltungen_datum']        ?? '';
-$_SESSION['veranstaltungen_plz_von']        = $_SESSION['veranstaltungen_plz_von']      ?? '1';
-$_SESSION['veranstaltungen_plz_bis']        = $_SESSION['veranstaltungen_plz_bis']      ?? '*';
-$_SESSION['veranstaltungen_kosten_von']     = $_SESSION['veranstaltungen_kosten_von']   ?? '';
-$_SESSION['veranstaltungen_kosten_bis']     = $_SESSION['veranstaltungen_kosten_bis']   ?? '';
+$_SESSION['veranstaltungen_plz_von']        = $_SESSION['veranstaltungen_plz_von']      ?? '';
+$_SESSION['veranstaltungen_plz_bis']        = $_SESSION['veranstaltungen_plz_bis']      ?? '';
 $_SESSION['veranstaltungen_name']           = $_SESSION['veranstaltungen_name']         ?? '';
 $_SESSION['veranstaltungen_beschreibung']   = $_SESSION['veranstaltungen_beschreibung'] ?? '';
 $_SESSION['veranstaltungen_ort']            = $_SESSION['veranstaltungen_ort']          ?? '';
@@ -31,8 +28,8 @@ $suche_besucher = [
     'ort'           => $_GET['ort']             ?? '',
     'stadt'         => $_GET['stadt']           ?? '',
     'adresse'       => $_GET['adresse']         ?? '',
-    'plz_von'       => $_GET['plz_von']         ?? '1',
-    'plz_bis'       => $_GET['plz_bis']         ?? '*',
+    'plz_von'       => $_GET['plz_von']         ?? '',
+    'plz_bis'       => $_GET['plz_bis']         ?? '',
     'datum'         => $_GET['datum']           ?? ''
 ];
 
@@ -88,16 +85,6 @@ if (isset($_GET['plz_bis'])) {
     $_SESSION['veranstaltungen_seite'] = '1';
 }
 
-
-if (isset($_GET['kosten_von'])) {
-    $_SESSION['veranstaltungen_kosten_von'] = trim(strip_tags($_GET['kosten_von']));
-    $_SESSION['veranstaltungen_seite'] = '1';
-}
-
-if (isset($_GET['kosten_bis'])) {
-    $_SESSION['veranstaltungen_kosten_bis'] = trim(strip_tags($_GET['kosten_bis']));
-    $_SESSION['veranstaltungen_seite'] = '1';
-}
 
 if (isset($_GET['datum'])) {
     $_SESSION['veranstaltungen_datum'] = trim(strip_tags($_GET['datum']));
@@ -163,12 +150,16 @@ $where_klausel = '';
 if (!empty($where_array)) {
     $where_klausel = 'WHERE ' . implode(' AND ', $where_array);
 }
-dump($where_klausel);
+
+/*
+ * Gesamtzahl gefundener Datensätze ermitteln
+ */
+/** @var int $anzahl  Anzahl gefundener Datensätze */
 $anzahl = 0;
 
 $sql = "SELECT vid FROM veranstaltungen LEFT JOIN orte ON veranstaltungen.oid = orte.oid $where_klausel";
 
-dump($sql);
+
 // SQL-Statement an die Datenbank schicken und Ergebnis (Resultset) in $result speichern
 if ($result = mysqli_query($db, $sql)) {
     // Anzahl der Treffer ermitteln
@@ -192,11 +183,13 @@ $offset = ($_SESSION['veranstaltungen_seite'] - 1) * PROSEITE;
 // LIMIT-Klausel erstellen
 $limit = "LIMIT $offset, " . PROSEITE;
 
+/*
+ * Gespeicherte Daten aus der Datenbank lesen
+ */
 // Sortierung formulieren
 $order = "ORDER BY {$_SESSION['veranstaltungen_sort']} {$_SESSION['veranstaltungen_dest']}";
 
 //SQL-Statement zum Lesen der anzuzeigenden Einträge
-dump($sql);
 $sql = <<<EOT
     SELECT veranstaltungen.vid,
            veranstaltungen.name,
@@ -210,10 +203,8 @@ $sql = <<<EOT
     LEFT JOIN orte ON veranstaltungen.oid = orte.oid
         $where_klausel
         $order          
-        $limit
-             
+        $limit            
 EOT;
-dump($sql);
 
 // SQL-Statement an die Datenbank schicken und Ergebnis (Resultset) in $result speichern
 if ($result = mysqli_query($db, $sql)) {
