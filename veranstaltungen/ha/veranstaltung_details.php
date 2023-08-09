@@ -73,29 +73,24 @@ $ausgabe['titel'] = 'Details';
 include TEMPLATES . 'htmlkopf.phtml';
 ?>
 
-            <?php if($ergebnis): ?>
-                <?php if(!veranstaltungExist($detailsid)): ?>
-                    
-               
-            <h4><span>Ungültige ID</span></h4>
-              <?php       endif; ?>
-            
-            
-            <?php else: ?>
-            <h3><span><?= $ergebnis ?></span></h3>
-            
-            
-            <table>
-                <?php foreach($veranstaltung as $name => $wert): ?>
-                <tr>
-                    <th><?= ucfirst($name) ?></th>
-                    <td><?= $wert ?></td>
-                </tr>
-                <?php endforeach; ?>
-            </table>
-            
-            
-            
-            <?php endif; ?>
-            <h3><a href="pindexadmin.php">zurück zur Liste</a></h3>
-       <?php
+<?php if($ergebnis): ?>
+    <?php if(!veranstaltungExist($detailsid)): ?>
+        <h4><span>Ungültige ID</span></h4>
+<?php endif; ?>
+<?php else: ?>
+    <h3><span><?= $ergebnis ?></span></h3>
+
+<table>
+    <?php foreach($veranstaltung as $name => $wert): ?>
+    <tr>
+        <th><?= ucfirst($name) ?></th>
+        <td><?= $wert ?></td>
+    </tr>
+    <?php endforeach; ?>
+</table>
+
+
+
+<?php endif; ?>
+<h3><a href="pindexadmin.php">zurück zur Liste</a></h3>
+<?php

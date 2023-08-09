@@ -7,14 +7,14 @@
  * $ausgabe['typ']          - Typ des Feldes
  * $ausgabe['feldname']     - Name und ID des Feldes
  * $ausgabe['beschriftung'] - Inhalt des Label-Elements
- * $ausgabe['fehler']       - Fehlermeldungen
+ * $ausgabe['cssklasse']    - .klasse waehlen
  * 
  * 
  */
 ?>
 <div>
-    <label for="<?= $ausgabe['feldname'] ?>"><?= $ausgabe['beschriftung'] ?></label>
-    <input type="<?= $ausgabe['typ'] ?>" name="<?= $ausgabe['feldname'] ?>" id="<?= htmlspecialchars($ausgabe['feldname']) ?>" value="<?= $form[$ausgabe['feldname']] ?>">
-    <span><?= $ausgabe['fehler'][$ausgabe['feldname']] ?? '' ?></span>
+    <label for="<?= $ausgabe['feldname'] ?>" class="<?= $ausgabe['cssklasse'] ?>"><?= $ausgabe['beschriftung'] ?></label>
+    <input type="<?= $ausgabe['typ'] ?>" name="<?= $ausgabe['feldname'] ?>" id="<?= htmlspecialchars($ausgabe['feldname']) ?>" value="<?= $form[$ausgabe['feldname']] ?>"><br>
+    <span><?= $fehler[$ausgabe['feldname']] ?? '' ?></span>
 </div>
 

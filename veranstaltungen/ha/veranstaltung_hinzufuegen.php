@@ -2,11 +2,11 @@
 require_once 'functions.php';
 require_once 'functions_veranstaltungen.php';
 
-
-session_start();
-$orte = getOrte();
 /** @var string[] $form alle Formularfelder */
 $form = [];
+
+$orte = getOrte();
+
 
 /** @var string[] $fehler Fehlermeldungen für Formularfelder */
 $fehler = [];
@@ -36,18 +36,6 @@ if (isset($_POST['okbutton'])) {
         $fehler['name'] = 'Veranstaltungsname muss mindestens zwei Zeichen lang sein';
     }
 
-
-//    // Postleitzahl prüfen
-//    if (!$form['plz']) {
-//        $fehler['plz'] = 'Bitte PLZ eingeben';
-//    } elseif (intval($form['plz']) < 100 || intval($form['plz']) > 99999) {
-//        $fehler['plz'] = 'Bitte eine gültige deutsche PLZ eingeben';
-//    }
-//
-    // Ort prüfen wird sowieso select 
-//    if (!$form['ort']) {
-//        $fehler['ort'] = 'Bitte Ort eingeben';
-//    }
     // Datum prüfen
     if (!$form['datum']) {
         $fehler['datum'] = 'Bitte Datum eingeben';

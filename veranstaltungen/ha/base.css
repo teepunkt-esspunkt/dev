@@ -5,7 +5,7 @@ body{
     font-family: bahnschrift, arial, verdana, sans-serif;
 }
 table{
-    width: 80%;
+    width: 90%;
     overflow: hidden;
 }
 h1{
@@ -30,7 +30,7 @@ tr:nth-child(even):hover {
    background-color: rgba(255, 255, 0, 0.5);
 }
 
-.mathe_tabelle_operator_wahl{
+/*.mathe_tabelle_operator_wahl{
     position: absolute;
     width: 100%;
     left: 0;
@@ -42,9 +42,7 @@ tr:nth-child(even):hover {
     text-align: center;
     -webkit-appearance: none;
   -moz-appearance: none;
-  
-    
-}
+}*/
 td:hover::after { 
    background-color: rgba(255, 255, 0, 0.5);
    content: '';  
@@ -68,7 +66,7 @@ th:hover::after {
 tr:nth-child(even){
 	background-color: rgba(71, 71, 71, 0.5);
 }
-col:nth-child(odd):not(:first-child) {
+col:nth-child(odd) {
     background-color: rgba(71, 71, 71, 0.5);
 }
 
@@ -166,10 +164,6 @@ article{
 	
 }
 
-form {
-    width: 650px;
-    margin: 0 auto;
-}
 h1,
 h3 {
     text-align: center;
@@ -210,10 +204,6 @@ textarea {
     font-weight: bold;
 }
 
-span {
-    color: red;
-}
-
 input + label {
     margin-right: 20px;
 }
@@ -236,14 +226,12 @@ form {
 	width: 30em;
 	margin: 1.5em auto 0.5em;
 	border: 1px solid maroon;
-	background-color: aqua;
+/*	background-color: aqua;*/
+        background-color: #AAFFFF;
 	padding: 1.5em;
 }
 
-.correct {
-    color: green;
-}
-.false{
+span{
     color: red;
 }
 a{
@@ -261,4 +249,13 @@ img.klein {
 }
 div.okknopf {
   margin-left: 20px;
+}
+.standard{
+    
+}
+
+.paginator{
+    font-size: 150%;
+    text-align: center;
+    width: 90%;
 }

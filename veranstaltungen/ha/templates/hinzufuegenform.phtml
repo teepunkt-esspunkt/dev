@@ -12,7 +12,8 @@ include TEMPLATES . 'htmlkopf.phtml';
     $ausgabe['beschriftung'] = 'Veranstaltung';
     $ausgabe['feldname'] = 'name';
     $ausgabe['typ'] = 'text';
-    include TEMPLATES . 'inputfeldadd.phtml';
+    $ausgabe['cssklasse'] = 'pflicht';
+    include TEMPLATES . 'inputfeld.phtml';
     ?>
     
 <!--        Ort als Selectbox-->
@@ -30,7 +31,8 @@ include TEMPLATES . 'htmlkopf.phtml';
     $ausgabe['beschriftung'] = 'Datum';
     $ausgabe['feldname'] = 'datum';
     $ausgabe['typ'] = 'date';
-    include TEMPLATES . 'inputfeldadd.phtml';
+    $ausgabe['cssklasse'] = 'pflicht';
+    include TEMPLATES . 'inputfeld.phtml';
     
     // Beschreibung bitte nach unten fuer die Aesthetik!
     ?>
@@ -44,8 +46,7 @@ include TEMPLATES . 'htmlkopf.phtml';
     <div>
         <button type="submit" name="okbutton" value="1">speichern</button>
     </div>
-
-<!--            <div class='formcaption'>Felder in <span class='pflicht'>blau</span> sind Pflichtfelder</div>-->
+            <div class='formcaption'>Felder in <span class='pflicht'>blau</span> sind Pflichtfelder</div>
     <?php
     include TEMPLATES . 'htmlfuss.phtml';
     

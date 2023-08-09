@@ -14,6 +14,7 @@ include TEMPLATES . 'htmlkopf.phtml';
         $ausgabe['feldname'] = 'name';
         $ausgabe['beschriftung'] = 'Veranstaltung';
         $ausgabe['typ'] = 'text';
+        $ausgabe['cssklasse'] = 'pflicht';
         include TEMPLATES . 'inputfeld.phtml';
         ?>
 
@@ -33,6 +34,7 @@ include TEMPLATES . 'htmlkopf.phtml';
         $ausgabe['feldname'] = 'datum';
         $ausgabe['beschriftung'] = 'Veranstaltungstag';
         $ausgabe['typ'] = 'date';
+        $ausgabe['cssklasse'] = 'pflicht';
         include TEMPLATES . 'inputfeld.phtml';
         ?>
         <div>
@@ -42,7 +44,8 @@ include TEMPLATES . 'htmlkopf.phtml';
         </div>
         <div>
             <button type="submit" name="okbutton" value="1">speichern</button>
-        </div>             
+        </div>   
+        <div class='formcaption'>Felder in <span class='pflicht'>blau</span> sind Pflichtfelder</div>
     </form>
 <?php endif; ?>
 <?php

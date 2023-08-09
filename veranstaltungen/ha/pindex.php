@@ -10,29 +10,29 @@ session_start();
 
 // Standardwerte für Sessionvariablen setzen
 
-$_SESSION['veranstaltungen_sort'] = $_SESSION['veranstaltungen_sort'] ?? 'vid';
-$_SESSION['veranstaltungen_dest'] = $_SESSION['veranstaltungen_dest'] ?? 'ASC';
-$_SESSION['veranstaltungen_seite'] = $_SESSION['veranstaltungen_seite'] ?? '1';
-$_SESSION['veranstaltungen_datum'] = $_SESSION['veranstaltungen_datum'] ?? '';
-$_SESSION['veranstaltungen_plz_von'] = $_SESSION['veranstaltungen_plz_von'] ?? '';
-$_SESSION['veranstaltungen_plz_bis'] = $_SESSION['veranstaltungen_plz_bis'] ?? '';
-$_SESSION['veranstaltungen_kosten_von'] = $_SESSION['veranstaltungen_kosten_von'] ?? '';
-$_SESSION['veranstaltungen_kosten_bis'] = $_SESSION['veranstaltungen_kosten_bis'] ?? '';
-$_SESSION['veranstaltungen_name'] = $_SESSION['veranstaltungen_name'] ?? '';
-$_SESSION['veranstaltungen_beschreibung'] = $_SESSION['veranstaltungen_beschreibung'] ?? '';
-$_SESSION['veranstaltungen_ort'] = $_SESSION['veranstaltungen_ort'] ?? '';
-$_SESSION['veranstaltungen_stadt'] = $_SESSION['veranstaltungen_stadt'] ?? '';
-$_SESSION['veranstaltungen_adresse'] = $_SESSION['veranstaltungen_adresse'] ?? '';
+$_SESSION['veranstaltungen_sort']           = $_SESSION['veranstaltungen_sort']         ?? 'vid';
+$_SESSION['veranstaltungen_dest']           = $_SESSION['veranstaltungen_dest']         ?? 'ASC';
+$_SESSION['veranstaltungen_seite']          = $_SESSION['veranstaltungen_seite']        ?? '1';
+$_SESSION['veranstaltungen_datum']          = $_SESSION['veranstaltungen_datum']        ?? '';
+$_SESSION['veranstaltungen_plz_von']        = $_SESSION['veranstaltungen_plz_von']      ?? '';
+$_SESSION['veranstaltungen_plz_bis']        = $_SESSION['veranstaltungen_plz_bis']      ?? '';
+$_SESSION['veranstaltungen_kosten_von']     = $_SESSION['veranstaltungen_kosten_von']   ?? '';
+$_SESSION['veranstaltungen_kosten_bis']     = $_SESSION['veranstaltungen_kosten_bis']   ?? '';
+$_SESSION['veranstaltungen_name']           = $_SESSION['veranstaltungen_name']         ?? '';
+$_SESSION['veranstaltungen_beschreibung']   = $_SESSION['veranstaltungen_beschreibung'] ?? '';
+$_SESSION['veranstaltungen_ort']            = $_SESSION['veranstaltungen_ort']          ?? '';
+$_SESSION['veranstaltungen_stadt']          = $_SESSION['veranstaltungen_stadt']        ?? '';
+$_SESSION['veranstaltungen_adresse']        = $_SESSION['veranstaltungen_adresse']      ?? '';
 
 $suche_besucher = [
-    'name' => $_GET['name'] ?? '',
-    'beschreibung' => $_GET['beschreibung'] ?? '',
-    'ort' => $_GET['ort'] ?? '',
-    'stadt' => $_GET['stadt'] ?? '',
-    'adresse' => $_GET['adresse'] ?? '',
-    'plz_von' => $_GET['plz_von'] ?? '',
-    'plz_bis' => $_GET['plz_bis'] ?? '',
-    'datum' => $_GET['datum'] ?? ''
+    'name'          => $_GET['name'] ?? '',
+    'beschreibung'  => $_GET['beschreibung'] ?? '',
+    'ort'           => $_GET['ort'] ?? '',
+    'stadt'         => $_GET['stadt'] ?? '',
+    'adresse'       => $_GET['adresse'] ?? '',
+    'plz_von'       => $_GET['plz_von'] ?? '',
+    'plz_bis'       => $_GET['plz_bis'] ?? '',
+    'datum'         => $_GET['datum'] ?? ''
 ];
 
 /** @var array für die Veranstaltungsdaten */
@@ -124,8 +124,6 @@ if (isset($_GET['sort'])) {
 if (isset($_GET['seite'])) {
     $_SESSION['veranstaltungen_seite'] = intval(strip_tags($_GET['seite']));
 }
-
-
 
 // Verbindung zur Datenbank aufbauen
 $db = dbConnect();

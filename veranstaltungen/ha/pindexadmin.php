@@ -8,7 +8,6 @@ const PROSEITE = 3;
 session_start();
 
 // Standardwerte für Sessionvariablen setzen
-
 $_SESSION['veranstaltungen_sort']           = $_SESSION['veranstaltungen_sort']         ?? 'vid';
 $_SESSION['veranstaltungen_dest']           = $_SESSION['veranstaltungen_dest']         ?? 'ASC';
 $_SESSION['veranstaltungen_seite']          = $_SESSION['veranstaltungen_seite']        ?? '1';
@@ -21,7 +20,7 @@ $_SESSION['veranstaltungen_ort']            = $_SESSION['veranstaltungen_ort']  
 $_SESSION['veranstaltungen_stadt']          = $_SESSION['veranstaltungen_stadt']        ?? '';
 $_SESSION['veranstaltungen_adresse']        = $_SESSION['veranstaltungen_adresse']      ?? '';
 
-// Suche fuer Admin
+// AUCH Suche fuer Admin
 $suche_besucher = [
     'name'          => $_GET['name']            ?? '',
     'beschreibung'  => $_GET['beschreibung']    ?? '',
@@ -146,6 +145,7 @@ foreach ($suche_besucher as $key => $value) {
     }
 }
 
+// Leicht angepasste WHERE Klausel, da auch vergangene Veranstaltungen angezeigt werden sollen
 $where_klausel = '';
 if (!empty($where_array)) {
     $where_klausel = 'WHERE ' . implode(' AND ', $where_array);
@@ -225,19 +225,19 @@ if ($result = mysqli_query($db, $sql)) {
 mysqli_close($db);
 
 // Suchtext für Ausgabe im Formular escapen
-$suchstring_name = htmlspecialchars($_SESSION['veranstaltungen_name']);
+$suchstring_name                = htmlspecialchars($_SESSION['veranstaltungen_name']);
 
-$suchstring_ort = htmlspecialchars($_SESSION['veranstaltungen_ort']);
+$suchstring_ort                 = htmlspecialchars($_SESSION['veranstaltungen_ort']);
 
-$suchstring_beschreibung = htmlspecialchars($_SESSION['veranstaltungen_beschreibung']);
+$suchstring_beschreibung        = htmlspecialchars($_SESSION['veranstaltungen_beschreibung']);
 
-$suchstring_plz_von = htmlspecialchars($_SESSION['veranstaltungen_plz_von']);
+$suchstring_plz_von             = htmlspecialchars($_SESSION['veranstaltungen_plz_von']);
 
-$suchstring_plz_bis = htmlspecialchars($_SESSION['veranstaltungen_plz_bis']);
+$suchstring_plz_bis             = htmlspecialchars($_SESSION['veranstaltungen_plz_bis']);
 
-$suchstring_datum = htmlspecialchars($_SESSION['veranstaltungen_datum']);
+$suchstring_datum               = htmlspecialchars($_SESSION['veranstaltungen_datum']);
 
-$suchstring_stadt = htmlspecialchars($_SESSION['veranstaltungen_stadt']);
+$suchstring_stadt               = htmlspecialchars($_SESSION['veranstaltungen_stadt']);
 
 $ausgabe['titel'] = "Adminbereich Tabelle";
 $ausgabe['spaltenanzahl'] = 10;
