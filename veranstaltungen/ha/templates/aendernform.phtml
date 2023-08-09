@@ -3,8 +3,8 @@
 $ausgabe['titel'] = 'Ändern';
 include TEMPLATES . 'htmlkopf.phtml';
 ?>
-<?php if (!empty($ergebnis['vid'])): ?>
-    <h3><span><?= $ergebnis['vid'] ?></span></h3>
+<?php if (!empty($fehler['vid'])): ?>
+    <h3><span><?= $fehler['vid'] ?></span></h3>
     <h4><a href="pindexadmin.php">zurück zur Übersicht</a></h4>
 <?php else: ?>
     <form action="<?= $_SERVER['PHP_SELF'] ?>" method="post">

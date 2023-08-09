@@ -53,8 +53,8 @@ EOT;
  * Prüfen, ob Formular abgeschickt wurde
  * Falls ja, dann weitere Prüfungen durchführen
  */ else {
-    /** @var string[] $ergebnis Fehlermeldungen für Formularfelder */
-    $ergebnis = [];
+    /** @var string[] $fehler Fehlermeldungen für Formularfelder */
+    $fehler = [];
 
     /*
      * Werte sämtlicher Formularfelder holen
@@ -66,26 +66,28 @@ EOT;
     $form['datum']              = !empty($_POST['datum']) ? trim(strip_tags($_POST['datum'])) : '';
 
 
-    // Veranstaltungsname prüfen warum geht das nicht mehr..
-   if (strlen($form['name']) < 2) {
-        $ergebnis['name'] = 'Veranstaltungsname muss mindestens 2 Zeichen lang sein';
+     // ID prüfen
+    if (0 >= $form['vid']) {
+        $fehler['vid'] = 'Kein Datensatz!';
+    } elseif (!veranstaltungExist($form['vid'])) {
+        $fehler['vid'] = 'Datensatz nicht gefunden!';
     }
     
-    // ID prüfen
-    if (0 >= $form['vid']) {
-        $ergebnis['vid'] = 'Kein Datensatz!';
-    } elseif (!veranstaltungExist($form['vid'])) {
-        $ergebnis['vid'] = 'Datensatz nicht gefunden!';
+    // Veranstaltungsname prüfen
+   if (strlen($form['name']) < 2) {
+        $fehler['name'] = 'Veranstaltungsname muss mindestens 2 Zeichen lang sein';
     }
+    
+   
 
     // Beschreibung prüfen
     if (strlen($form['name']) > 10000) {
-        $ergebnis['name'] = 'Beschreibung darf höchstens 10.000 Zeichen lang sein';
+        $fehler['name'] = 'Beschreibung darf höchstens 10.000 Zeichen lang sein';
     }
 
     // Veranstaltungsort prüfen
     if (!$form['oid']) {
-        $ergebnis['oid'] = 'Bitte Veranstaltungsort auswählen';
+        $fehler['oid'] = 'Bitte Veranstaltungsort auswählen';
     }
 
     // Tag der Veranstaltung prüfen
@@ -101,7 +103,7 @@ EOT;
     /*
      * Wenn keine Fehler in Formularfeldern gefunden
      */
-    if (!count($ergebnis)) {
+    if (!count($fehler)) {
         /*
          * Erfasste Daten in eine Datenbank schreiben
          */
