@@ -52,7 +52,7 @@ function getOrte()
     // Verbindung zur Datenbank aufbauen
     $db = dbConnect();
     
-    /** @var string[] $laender  Assoziatives Array mit den Ländern */
+    /** @var string[] $orte  Assoziatives Array mit den Ländern */
     $orte = [];
 
     // SQL-Statement erzeugen

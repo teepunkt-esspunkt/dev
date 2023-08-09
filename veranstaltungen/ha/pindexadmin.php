@@ -97,7 +97,7 @@ if (isset($_GET['datum'])) {
 if (isset($_GET['sort'])) {
     $sort = trim(strip_tags($_GET['sort']));
     // übergebene Sortierung prüfen
-    $felder = ['vid', 'name', 'beschreibung', 'datum', 'ort', 'adresse', 'stadt'];
+    $felder = ['vid', 'name', 'beschreibung', 'datum', 'ort', 'adresse', 'stadt', 'plz'];
     $sort = in_array($sort, $felder) ? $sort : 'vid';
 
     // Prüfen, ob alte Sortierung der neuen entspricht, dann Richtung umdrehen

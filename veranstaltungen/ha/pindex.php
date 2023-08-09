@@ -1,4 +1,5 @@
 <?php
+
 require_once 'functions.php';
 
 // Anzahl anzuzeigender Adressen pro Seite
@@ -7,22 +8,21 @@ const PROSEITE = 3;
 // Starten der Session
 session_start();
 
-
 // Standardwerte für Sessionvariablen setzen
 
-$_SESSION['veranstaltungen_sort']         = $_SESSION['veranstaltungen_sort']  ?? 'vid';
-$_SESSION['veranstaltungen_dest']         = $_SESSION['veranstaltungen_dest']  ?? 'ASC';
-$_SESSION['veranstaltungen_seite']        = $_SESSION['veranstaltungen_seite'] ?? '1';
-$_SESSION['veranstaltungen_datum']        = $_SESSION['veranstaltungen_datum'] ?? '';
-$_SESSION['veranstaltungen_plz_von']      = $_SESSION['veranstaltungen_plz_von'] ?? '';
-$_SESSION['veranstaltungen_plz_bis']      = $_SESSION['veranstaltungen_plz_bis'] ?? '';
-$_SESSION['veranstaltungen_kosten_von']   = $_SESSION['veranstaltungen_kosten_von'] ?? '';
-$_SESSION['veranstaltungen_kosten_bis']   = $_SESSION['veranstaltungen_kosten_bis'] ?? '';
-$_SESSION['veranstaltungen_name']         = $_SESSION['veranstaltungen_name'] ?? '';
+$_SESSION['veranstaltungen_sort'] = $_SESSION['veranstaltungen_sort'] ?? 'vid';
+$_SESSION['veranstaltungen_dest'] = $_SESSION['veranstaltungen_dest'] ?? 'ASC';
+$_SESSION['veranstaltungen_seite'] = $_SESSION['veranstaltungen_seite'] ?? '1';
+$_SESSION['veranstaltungen_datum'] = $_SESSION['veranstaltungen_datum'] ?? '';
+$_SESSION['veranstaltungen_plz_von'] = $_SESSION['veranstaltungen_plz_von'] ?? '';
+$_SESSION['veranstaltungen_plz_bis'] = $_SESSION['veranstaltungen_plz_bis'] ?? '';
+$_SESSION['veranstaltungen_kosten_von'] = $_SESSION['veranstaltungen_kosten_von'] ?? '';
+$_SESSION['veranstaltungen_kosten_bis'] = $_SESSION['veranstaltungen_kosten_bis'] ?? '';
+$_SESSION['veranstaltungen_name'] = $_SESSION['veranstaltungen_name'] ?? '';
 $_SESSION['veranstaltungen_beschreibung'] = $_SESSION['veranstaltungen_beschreibung'] ?? '';
-$_SESSION['veranstaltungen_ort']          = $_SESSION['veranstaltungen_ort'] ?? '';
-$_SESSION['veranstaltungen_stadt']        = $_SESSION['veranstaltungen_stadt'] ?? '';
-$_SESSION['veranstaltungen_adresse']      = $_SESSION['veranstaltungen_adresse'] ?? '';
+$_SESSION['veranstaltungen_ort'] = $_SESSION['veranstaltungen_ort'] ?? '';
+$_SESSION['veranstaltungen_stadt'] = $_SESSION['veranstaltungen_stadt'] ?? '';
+$_SESSION['veranstaltungen_adresse'] = $_SESSION['veranstaltungen_adresse'] ?? '';
 
 $suche_besucher = [
     'name' => $_GET['name'] ?? '',
@@ -45,7 +45,7 @@ $fehler = [];
  *  Suchformular auswerten und die WHERE-Klausel für die Abfrage erstellen
  * Suchfilter bei plz eingefügt zum Testen und beibehalten zum etwaigen erweitern später
  * wobei Besucher ja nichts in die Datenbank eintragen und trotz Fehleingaben sollen u.U. Ergebnisse angezeigt werden
- */ 
+ */
 
 if (isset($_GET['name'])) {
     $_SESSION['veranstaltungen_name'] = trim(strip_tags($_GET['name']));
@@ -107,7 +107,7 @@ if (isset($_GET['datum'])) {
 if (isset($_GET['sort'])) {
     $sort = trim(strip_tags($_GET['sort']));
     // übergebene Sortierung prüfen
-    $felder = ['vid', 'name', 'beschreibung', 'datum', 'kosten', 'ort', 'adresse', 'stadt'];
+    $felder = ['vid', 'name', 'beschreibung', 'datum', 'kosten', 'ort', 'adresse', 'stadt', 'plz'];
     $sort = in_array($sort, $felder) ? $sort : 'vid';
 
     // Prüfen, ob alte Sortierung der neuen entspricht, dann die Richtung umdrehen
@@ -172,7 +172,6 @@ $anzahl = 0;
 //SQL-Statement zum Ermitteln der Anzahl der gefundenen Einträge
 $sql = "SELECT vid FROM veranstaltungen LEFT JOIN orte ON veranstaltungen.oid = orte.oid WHERE datum >= CURRENT_DATE $where_klausel";
 // ehemaliger Dumpplatz zur Fehlersuche im SQL, jetzt durch diesen Kommentar ersetzt
-
 // SQL-Statement an die Datenbank schicken und Ergebnis (Resultset) in $result speichern
 if ($result = mysqli_query($db, $sql)) {
     // Anzahl der Treffer ermitteln
@@ -257,8 +256,7 @@ $suchstring_datum = htmlspecialchars($_SESSION['veranstaltungen_datum']);
 
 $suchstring_stadt = htmlspecialchars($_SESSION['veranstaltungen_stadt']);
 
-
-  $ausgabe['titel'] = "Besucherbereich Tabelle";
-  $ausgabe['spaltenanzahl'] = 7;
-  $ausgabe['admin'] =   0;
-include TEMPLATES . 'veranstaltungstabelleulti.phtml'; 
+$ausgabe['titel'] = "Besucherbereich Tabelle";
+$ausgabe['spaltenanzahl'] = 7;
+$ausgabe['admin'] = 0;
+include TEMPLATES . 'veranstaltungstabelleulti.phtml';
