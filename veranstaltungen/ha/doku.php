@@ -17,7 +17,7 @@ include TEMPLATES . 'htmlkopf.phtml';
         <li><a href="#tag3">Mittwoch</a></li>
         <li><a href="#tag4">Donnerstag</a></li>
         <li><a href="#tag6">Freitag</a></li>
-        <li><a href="#probleme">Freitag</a></li>
+        <li><a href="#probleme">Probleme</a></li>
     </ol>
 
     <h4>Teilnehmer:</h4>
@@ -81,8 +81,8 @@ include TEMPLATES . 'htmlkopf.phtml';
 
     <h4>Shayan:</h4>
     <ul>
-        <li>Besucherseite</li>
-        <li>Datenbank einrichten</li>
+        <li>Besucherseite Suche und Überlegungen</li>
+        <li>Datenbank bearbeiten</li>
     </ul>
     <h4>Tarek:</h4>
     <ul>
@@ -172,7 +172,7 @@ include TEMPLATES . 'htmlkopf.phtml';
             <li>Adminbereich ID Übergabe beim Löschen</li>
             <li>Sortierung der Felder Datum und PLZ</li>
             <li>Where Klausel erzeugte SQL Fehler</li>
-            <li>Probleme durch benötigte neue Template-Struktu</li>
+            <li>Probleme durch benötigte neue Template-Struktur</li>
         </ul>
         <p>Lösung: PHP-Code strukturiert durchgehen und nach Logikfehlern absuchen. (z.B. 
             Klammern , Schleifen, Bedingungen). SQL Dumps erzeugen um Fehler 
