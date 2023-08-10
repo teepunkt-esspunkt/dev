@@ -3,7 +3,7 @@
 }
 body{
     font-family: bahnschrift, arial, verdana, sans-serif;
-    background-image: url("images/feder.jpg");
+        background-image: url("images/feder.jpg");
 }
 table{
     width: 90%;
@@ -40,7 +40,6 @@ td:hover::after {
 }
 th:hover::after { 
    background-color: rgba(255, 255, 0, 0.5);
-    
    height: 10000px;    
    left: 0;
    position: absolute;  
@@ -49,21 +48,18 @@ th:hover::after {
 }
 
 tr:nth-child(even){
-	background-color: rgba(240, 248, 255, 0.9);
+	background-color: rgba(240, 248, 255, 0.5);
 }
 col:nth-child(odd) {
-    background-color: rgba(95, 158, 160, 0.4);
-}
-col:nth-child(even) {
-    background-color: rgba(95, 158, 160, 0.4);
+    background-color: rgba(95, 158, 160, 0.3);
 }
 
 thead th{
-    background-color: rgba(133, 80, 80, 0.3);
+    background-color: rgba(133, 80, 80, 0.4);
  
 }
 th {
-    background-color: rgba(95, 158, 160, 0.4);
+    background-color: rgba(120, 50, 50, 0.2);
 }
 
 #wrapper {
@@ -213,8 +209,7 @@ form {
 	margin: 1.5em auto 0.5em;
 	border: 1px solid maroon;
 /*	background-color: aqua;*/
-/*      background-color: #AAFFFF;*/
-        background-color: rgba(170,255,255, 0.9);
+        background-color: #AAFFFF;
 	padding: 1.5em;
 }
 
@@ -250,7 +245,6 @@ div.okknopf {
 p {
     line-height: 1.5em;
 }
-
 .doku {
     background-color: rgba(138, 113, 226, 0.5);
     padding: 5px;
