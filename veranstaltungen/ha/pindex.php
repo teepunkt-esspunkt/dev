@@ -16,8 +16,6 @@ $_SESSION['veranstaltungen_seite']          = $_SESSION['veranstaltungen_seite']
 $_SESSION['veranstaltungen_datum']          = $_SESSION['veranstaltungen_datum']        ?? '';
 $_SESSION['veranstaltungen_plz_von']        = $_SESSION['veranstaltungen_plz_von']      ?? '';
 $_SESSION['veranstaltungen_plz_bis']        = $_SESSION['veranstaltungen_plz_bis']      ?? '';
-$_SESSION['veranstaltungen_kosten_von']     = $_SESSION['veranstaltungen_kosten_von']   ?? '';
-$_SESSION['veranstaltungen_kosten_bis']     = $_SESSION['veranstaltungen_kosten_bis']   ?? '';
 $_SESSION['veranstaltungen_name']           = $_SESSION['veranstaltungen_name']         ?? '';
 $_SESSION['veranstaltungen_beschreibung']   = $_SESSION['veranstaltungen_beschreibung'] ?? '';
 $_SESSION['veranstaltungen_ort']            = $_SESSION['veranstaltungen_ort']          ?? '';
@@ -107,7 +105,7 @@ if (isset($_GET['datum'])) {
 if (isset($_GET['sort'])) {
     $sort = trim(strip_tags($_GET['sort']));
     // übergebene Sortierung prüfen
-    $felder = ['vid', 'name', 'beschreibung', 'datum', 'kosten', 'ort', 'adresse', 'stadt', 'plz'];
+    $felder = ['vid', 'name', 'beschreibung', 'datum', 'ort', 'adresse', 'stadt', 'plz'];
     $sort = in_array($sort, $felder) ? $sort : 'vid';
 
     // Prüfen, ob alte Sortierung der neuen entspricht, dann die Richtung umdrehen
