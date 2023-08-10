@@ -1,4 +1,5 @@
 <?php
+
 //session_start();
 require_once 'functions.php';
 require_once 'functions_veranstaltungen.php';
@@ -12,13 +13,11 @@ $updateid = !empty($_GET['updateid']) ? intval(trim($_GET['updateid'])) : 0;
 /** @var string[] $orte  Array mit allen Orten (Locations) */
 $orte = getOrte();
 
-
 /*
  *  Prüfen, ob ID zum Ändern übergeben wurde und ob ID korrekt ist
  */
 if (0 < $updateid && veranstaltungExist($updateid)) {
-    // ID zum Ändern wurde übergeben.
-    // Datensatz aus DB lesen und zur Anzeige vorbereiten
+
     // Verbindung zur Datenbank aufbauen
     $db = dbConnect();
 
@@ -48,41 +47,36 @@ EOT;
     } else {
         die('DB-Fehler (' . mysqli_errno($db) . ') ' . mysqli_error($db));
     }
-}
-/*
- * Prüfen, ob Formular abgeschickt wurde
- * Falls ja, dann weitere Prüfungen durchführen
- */ else {
+} else {
     /** @var string[] $fehler Fehlermeldungen für Formularfelder */
     $fehler = [];
 
     /*
      * Werte sämtlicher Formularfelder holen
      */
-    $form['vid']                = !empty($_POST['vid']) ? intval(trim($_POST['vid'])) : 0;
-    $form['name']               = !empty($_POST['name']) ? trim(strip_tags($_POST['name'])) : '';
-    $form['beschreibung']       = !empty($_POST['beschreibung']) ? trim(strip_tags($_POST['beschreibung'])) : '';
-    $form['oid']                = !empty($_POST['oid']) ? trim(strip_tags($_POST['oid'])) : '';
-    $form['datum']              = !empty($_POST['datum']) ? trim(strip_tags($_POST['datum'])) : '';
+    $form['vid'] = !empty($_POST['vid']) ? intval(trim($_POST['vid'])) : 0;
+    $form['name'] = !empty($_POST['name']) ? trim(strip_tags($_POST['name'])) : '';
+    $form['beschreibung'] = !empty($_POST['beschreibung']) ? trim(strip_tags($_POST['beschreibung'])) : '';
+    $form['oid'] = !empty($_POST['oid']) ? trim(strip_tags($_POST['oid'])) : '';
+    $form['datum'] = !empty($_POST['datum']) ? trim(strip_tags($_POST['datum'])) : '';
 
-
-     // ID prüfen
+    // ID prüfen
     if (0 >= $form['vid']) {
         $fehler['vid'] = 'Kein Datensatz!';
     } elseif (!veranstaltungExist($form['vid'])) {
         $fehler['vid'] = 'Datensatz nicht gefunden!';
     }
-    
+
     // Veranstaltungsname prüfen
-   if (strlen($form['name']) < 2) {
+    if (strlen($form['name']) < 2) {
         $fehler['name'] = 'Veranstaltungsname muss mindestens 2 Zeichen lang sein';
     }
-    
-   
+
+
 
     // Beschreibung prüfen
-    if (strlen($form['name']) > 10000) {
-        $fehler['name'] = 'Beschreibung darf höchstens 10.000 Zeichen lang sein';
+    if (strlen($form['name']) > 500) {
+        $fehler['name'] = 'Beschreibung darf höchstens 500 Zeichen lang sein';
     }
 
     // Veranstaltungsort prüfen
@@ -90,15 +84,27 @@ EOT;
         $fehler['oid'] = 'Bitte Veranstaltungsort auswählen';
     }
 
-    // Tag der Veranstaltung prüfen
-    if ($form['datum']) {
+     // Datum prüfen
+    if (!$form['datum']) {
+        $fehler['datum'] = 'Bitte Datum eingeben';
+    } 
+    else {
         // Datum extrahieren
         $jahr = substr($form['datum'], 0, 4);
         $monat = substr($form['datum'], 5, 2);
         $tag = substr($form['datum'], 8, 2);
-    } else {
-        // Nullwert setzen, wenn Datum nicht angegeben wurde
-        $form['datum'] = null;
+        // Datum auf allgemeine Gültigkeit prüfen
+        if (!checkdate($monat, $tag, $jahr)) {
+            $fehler['datum'] = 'Bitte gültiges Datum eingeben';
+        }
+        // Prüfen, dass Datum nicht in der Vergangenheit liegt
+        else {
+            $jetzt = mktime(0, 0, 0, date('n'), date('j'), intval(date('Y')));
+            $datum = mktime(0, 0, 0, $monat, $tag, $jahr);
+            if ($datum < $jetzt) {
+                $fehler['datum'] = 'Datum liegt in der Vergangenheit';
+            }
+        }
     }
     /*
      * Wenn keine Fehler in Formularfeldern gefunden
@@ -117,9 +123,6 @@ EOT;
                 $form[$key] = mysqli_real_escape_string($db, $value);
             }
         }
-
-        // String für Datum erzeugen (wegen möglichem NULL-Wert)
-        $datum = is_null($form['datum']) ? 'NULL' : "'${form['datum']}'";
 
         // SQL-Statement erzeugen
         $sql = <<<EOT

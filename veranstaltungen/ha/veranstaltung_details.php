@@ -61,10 +61,7 @@ EOT;
     // Verbindung zur Datenbank trennen
     mysqli_close($db);
 }
-//elseif(!$detailsid) {
-//    // Datensatz-ID wurde nicht übergeben
-//    $ergebnis = 'Datensatz-ID fehlt!';
-//}
+
 else {
     // Datensatz mit dieser ID existiert nicht
     $ergebnis = 'Ungültige Datensatz-ID!';

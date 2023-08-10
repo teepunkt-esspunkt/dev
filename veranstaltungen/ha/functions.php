@@ -80,10 +80,6 @@ function dieDump($varToDump, $title = '', $method = DUMP_VARDUMP)
     die;
 }
 
-function kuerzer($string1, $string2) {
-    return mb_strlen($string1) < mb_strlen($string2) ? $string1 : $string2;
-}
-
 function meineLinkeNavBarLeiste(){
     $meineStandardLinkeNavBarDatei = fopen('meineStandardLinkeNavBar.csv', 'r');
     while($meineStandardLinkeNavBarLinks = fgetcsv($meineStandardLinkeNavBarDatei)){

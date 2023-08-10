@@ -18,11 +18,6 @@ $form['beschreibung']   = !empty($_POST['beschreibung']) ? htmlspecialchars(trim
 $form['oid']            = !empty($_POST['oid']) ? htmlspecialchars(trim($_POST['oid'])) : '';
 $form['datum']          = !empty($_POST['datum']) ? htmlspecialchars(trim($_POST['datum'])) : '';
 
-//$form['ort'] = !empty($_GET['ort']) ? htmlspecialchars(trim($_GET['ort'])) : '';
-//$form['plz'] = !empty($_GET['plz']) ? htmlspecialchars(trim($_GET['plz'])) : '';
-//$form['stadt'] = !empty($_GET['stadt']) ? htmlspecialchars(trim($_GET['stadt'])) : '';
-//$form['adresse'] = !empty($_GET['adresse']) ? htmlspecialchars(trim($_GET['adresse'])) : '';
-
 /*
  * Prüfen, ob Formular abgeschickt wurde
  * Falls ja, dann weitere Prüfungen durchführen
@@ -49,7 +44,7 @@ if (isset($_POST['okbutton'])) {
         if (!checkdate($monat, $tag, $jahr)) {
             $fehler['datum'] = 'Bitte gültiges Datum eingeben';
         }
-        // Prüfen, Datum nicht in der Vergangenheit liegt
+        // Prüfen, dass Datum nicht in der Vergangenheit liegt
         else {
             $jetzt = mktime(0, 0, 0, date('n'), date('j'), intval(date('Y')));
             $datum = mktime(0, 0, 0, $monat, $tag, $jahr);

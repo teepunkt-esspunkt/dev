@@ -29,7 +29,7 @@ include TEMPLATES . 'htmlkopf.phtml';
     <p>Projekt:</p>
     <p>Erstellung einer Eventseite mit Besucherseite und Adminbereich</p>
 
-    <p id="dbstruktur">Datenbankstruktur:</p>
+    <h2 id="dbstruktur">Datenbankstruktur:</h2>
     <p>Definition und Benennung der Spalten:</p>
     <ul>
         <li>vid: Primärschlüssel für die Tabelle "Veranstaltungen", Veranstaltungs-ID (Auto-Increment)</li>
@@ -46,7 +46,7 @@ include TEMPLATES . 'htmlkopf.phtml';
     <h4>Datenbankname: veranstaltungen</h4>
     <h4>Tabellennamen: veranstaltungen, orte</h4>
 
-    <h4 id="allgemeinstruktur">Allgemeine Strukturen:</h4>
+    <h2 id="allgemeinstruktur">Allgemeine Strukturen:</h2>
     <p>Wir trennen php und HTML und benutzen Templates wo wir können, um bei eventuellen Änderungen nicht dieselben Änderungen an verschiedenen Stellen vornehmen zu müssen.</p>
     <p>Bei einigen Seiten, bei denen der HTML oder der PHP - Teil nur sehr klein ausfällt, sparen wir uns das, da es im Endeffekt mehr Arbeit bringt durch weitere Feinanpassungen der Templates.</p>
     <p>Für unseren eigenen einfacheren Zugriff benennen wir die "index.php" in "pindex.php" um und genauso die "indexadmin.php" in "pindexadmin.php".</p>
@@ -157,7 +157,7 @@ include TEMPLATES . 'htmlkopf.phtml';
 
         <h4>HTML/CSS Bereich</h4>
         <ul>
-            <li>Paginator verschob sich mit der breite der Tabelle</li>
+            <li>Paginator verschob sich mit der Breite der Tabelle</li>
             <li>Farben nicht optimal</li>
             <li>Titel anklickbar machen und dennoch mit einer Schleife arbeiten</li>
             <li>Ausrichtung der Formfelder und Suchbutton.</li>
