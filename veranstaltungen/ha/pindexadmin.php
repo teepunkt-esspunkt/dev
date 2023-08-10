@@ -119,26 +119,23 @@ if (isset($_GET['seite'])) {
 // Verbindung zur Datenbank aufbauen
 $db = dbConnect();
 
-/** @var string $where  Abfragebedingung für die Suche */
-$name = mysqli_escape_string($db, $_SESSION['veranstaltungen_name']);
-$ort = mysqli_escape_string($db, $_SESSION['veranstaltungen_ort']);
-$plz_von = mysqli_escape_string($db, $_SESSION['veranstaltungen_plz_von']);
-$plz_bis = mysqli_escape_string($db, $_SESSION['veranstaltungen_plz_bis']);
-$stadt = mysqli_escape_string($db, $_SESSION['veranstaltungen_stadt']);
-$beschreibung = mysqli_escape_string($db, $_SESSION['veranstaltungen_beschreibung']);
-$datum = mysqli_escape_string($db, $_SESSION['veranstaltungen_datum']);
-
 $where_array = [];
 foreach ($suche_besucher as $key => $value) {
     if (!empty($value)) {
         if ($key === 'name') {
             $escape = mysqli_real_escape_string($db, $value);
             $where_array[] = "(name LIKE '%$escape%' OR beschreibung LIKE '%$escape%')";
-        } elseif ($key === 'plz_von') {
-            $where_array[] = "plz BETWEEN '" . ($value) . "' AND ";
-        } elseif ($key === 'plz_bis') {
-            $where_array[count($where_array) - 1] .= "'" . mysqli_real_escape_string($db, $value) . "'";
-        } else {
+        } elseif ($key === 'plz_von' && !empty($suche_besucher['plz_bis'])) {
+            $plz_von = mysqli_real_escape_string($db, $value);
+            $plz_bis = mysqli_real_escape_string($db, $suche_besucher['plz_bis']);
+            $where_array[] = "plz BETWEEN '$plz_von' AND '$plz_bis'";
+        } elseif ($key === 'plz_von' && empty($suche_besucher['plz_bis'])) {
+            $plz_von = mysqli_real_escape_string($db, $value);
+            $where_array[] = "plz >= '$plz_von'";
+        } elseif ($key === 'plz_bis' && empty($suche_besucher['plz_von'])) {
+            $plz_bis = mysqli_real_escape_string($db, $value);
+            $where_array[] = "plz <= '$plz_bis'";
+        } elseif ($key !== 'plz_bis') {
             $escape = mysqli_real_escape_string($db, $value);
             $where_array[] = "$key LIKE '%$escape%'";
         }
