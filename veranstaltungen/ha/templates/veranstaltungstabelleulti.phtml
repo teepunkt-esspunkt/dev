@@ -38,11 +38,11 @@ include TEMPLATES . 'htmlkopf.phtml';
             <th> &nbsp; </th>
         <?php endif; ?> 
     </tr>
-
+<!--               Normale Schleifen mit Ausnahme, damit die Namen klickbar werden-->
     <?php foreach ($veranstaltungen as $veranstaltung): ?>
         <tr>
             <?php foreach ($veranstaltung as $key => $value): ?>
-            <!--                Ausnahme, damit die Namen klickbar werden, sonst normale Schleife-->
+            
                 <?php if ($key == 'name'): ?>
                     <td><a href="veranstaltung_details.php?detailsid=<?= $veranstaltung['vid'] ?>"><?= $value ?></a></td>
                 <?php else: ?>
