@@ -114,3 +114,4 @@ include TEMPLATES . 'htmlkopf.phtml';
             <?php endif; ?>
             <h3><a href="pindexadmin.php">zurück zur Liste</a></h3>
        <?php
+include TEMPLATES . 'htmlfuss.phtml';

@@ -13,14 +13,10 @@ include TEMPLATES . 'htmlkopf.phtml';
 
 
 <h3><?= number_format($anzahl, 0, ',', '.') ?> Veranstaltungen gefunden</h3>
-
-<table>
-<!--    <caption>-->
        
             
             <?php include TEMPLATES . 'paginator.phtml'; ?>
-      
-<!--   </caption>-->
+      <table>
 
     <?php
 

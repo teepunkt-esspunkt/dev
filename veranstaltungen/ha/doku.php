@@ -32,42 +32,60 @@ include TEMPLATES . 'htmlkopf.phtml';
 <p><strong>Datenbankname:</strong> veranstaltungen</p>
 <p><strong>Tabellennamen:</strong> veranstaltungen, orte</p>
 
+
 <h4>Vadim:</h4>
-<li>Dateinamen umbenennen, Funktionsanpassungen, Einrichten der Bearbeitungs- und Löschfunktion</li></p>
+<ul>
+<li>Dateinamen umbenennen</li>
+    <li>Funktionsanpassungen</li>
+        <li>Einrichten der Bearbeitungs- und Löschfunktion</li>
+</ul>
 
 <h4>Shayan:</h4>
-<li>Einrichtung der Besucherseite</p>
+<ul>
+<li>Einrichtung der Besucherseite</li>
+</ul>
 
 <h4>Tarek:</h4>
-<li>Einrichtung des Administrationsbereichs<br>
-<li>Aufteilung von HTML und PHP in Templates</p>
-
+<ul>
+<li>Einrichtung des Administrationsbereichs</li>
+<li>Aufteilung von HTML und PHP in Templates</li>
+</ul>
 <h2 id="tag2">Tag 2: HTML-PHP Trennung und Fehlerkorrekturen</h2>
 <h4>Tarek:</h4>
-<li>Rückgängigmachung der HTML-PHP-Trennung vom Vortag (Neustrukturierung von HTML in Templates)<br>
-<li>Fehlerkorrekturen<br>
-<li>Unterstützung</p>
+<ul>
+<li>Rückgängigmachung der HTML-PHP-Trennung vom Vortag (Neustrukturierung von HTML in Templates)</li>
+<li>Fehlerkorrekturen</li>
+<li>Unterstützung</li>
+</ul>
 
 <h2 id="tag3">Tag 3: Verfeinerung der Funktionen und Tests</h2>
+
 <h4>Shayan:</h4>
-<li>Verfeinerung der Suchfunktion<br>
-<li>Implementierung mehrerer Suchen im Formular, Verwendung von WHERE-Klauseln für mehrere Kriterien<br>
-<li>Implementierung von HTML-Code<br>
-<li>Fehlerbehebung</p>
+<ul>
+<li>Verfeinerung der Suchfunktion</li>
+<li>Implementierung mehrerer Suchen im Formular, Verwendung von WHERE-Klauseln für mehrere Kriterien</li>
+<li>Implementierung von HTML-Code</li>
+<li>Fehlerbehebung</li>
+</ul>
 
 <h4>Vadim:</h4>
-<li>Unterstützung bei der Rückgängigmachung der Trennung<br>
-<li>Aktualisierung von Einträgen in der Datenbank</p>
+<ul>
+<li>Unterstützung bei der Rückgängigmachung der Trennung</li>
+<li>Aktualisierung von Einträgen in der Datenbank</li>
+</ul>
 
 <h4>Tarek:</h4>
-<li>Homogenisierung der Seiten "pindex" und "pindexadmin" für die Benutzung eines einzigen HTML-Templates<br>
-<li>Fehlerbehebung<br>
-<li>Tests von Abfragen</p>
+<ul>
+<li>Homogenisierung der Seiten "pindex" und "pindexadmin" für die Benutzung eines einzigen HTML-Templates</li>
+<li>Fehlerbehebung</li>
+<li>Tests von Abfragen</li>
+</ul>
 
 <h4>Vadim:</h4>
-<li>Datenbanktests<br>
-<li>Bereitstellung von Unterstützung</p>
-
+<ul>
+<li>Datenbanktests</li>
+<li>Bereitstellung von Unterstützung</li>
+</ul>
 <h2 id="tag4">Tag 4: Verfeinerung der Funktionen und Tests</h2>
 <?php
 
