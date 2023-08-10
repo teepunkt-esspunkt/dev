@@ -29,7 +29,7 @@ tr:nth-child(even):hover {
 }
 
 td:hover::after { 
-   background-color: rgba(255, 255, 0, 0.5);
+   background-color: rgba(255, 255, 0, 0.8);
    content: '';  
    z-index: -1;
    height: 10000px;    
@@ -39,7 +39,7 @@ td:hover::after {
    width: 100%;   
 }
 th:hover::after { 
-   background-color: rgba(255, 255, 0, 0.5);
+   background-color: rgba(255, 255, 0, 0.8);
     
    height: 10000px;    
    left: 0;
@@ -49,21 +49,24 @@ th:hover::after {
 }
 
 tr:nth-child(even){
-	background-color: rgba(240, 248, 255, 0.9);
+	background-color: rgba(240, 248, 255, 0.2);
+}
+tr:nth-child(odd){
+	background-color: rgba(240, 248, 255, 0.6);
 }
 col:nth-child(odd) {
-    background-color: rgba(95, 158, 160, 0.4);
+    background-color: rgba(95, 158, 160, 0.2);
 }
 col:nth-child(even) {
-    background-color: rgba(95, 158, 160, 0.4);
+    background-color: rgba(95, 158, 160, 0.8);
 }
 
 thead th{
-    background-color: rgba(133, 80, 80, 0.3);
+    background-color: rgba(133, 80, 80, 0.7);
  
 }
 th {
-    background-color: rgba(95, 158, 160, 0.4);
+    background-color: rgba(95, 158, 160, 0.2);
 }
 
 #wrapper {
@@ -213,8 +216,7 @@ form {
 	margin: 1.5em auto 0.5em;
 	border: 1px solid maroon;
 /*	background-color: aqua;*/
-/*      background-color: #AAFFFF;*/
-        background-color: rgba(170,255,255, 0.9);
+        background-color: #AAFFFF;
 	padding: 1.5em;
 }
 
@@ -250,7 +252,6 @@ div.okknopf {
 p {
     line-height: 1.5em;
 }
-
 .doku {
     background-color: rgba(138, 113, 226, 0.5);
     padding: 5px;
