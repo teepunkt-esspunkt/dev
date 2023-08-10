@@ -80,13 +80,19 @@ function dieDump($varToDump, $title = '', $method = DUMP_VARDUMP)
     die;
 }
 
+
+// Funktion fuer die linke Navigationsleiste, mit IF-Abfrage um Links auf fremde Webseiten in einem neuen Tab zu oeffnen
 function meineLinkeNavBarLeiste(){
     $meineStandardLinkeNavBarDatei = fopen('meineStandardLinkeNavBar.csv', 'r');
     while($meineStandardLinkeNavBarLinks = fgetcsv($meineStandardLinkeNavBarDatei)){
      $meineStandardLinkeNavBarArray[] = $meineStandardLinkeNavBarLinks;
 }
-fclose($meineStandardLinkeNavBarDatei);  
+    fclose($meineStandardLinkeNavBarDatei);  
     foreach($meineStandardLinkeNavBarArray as $key => $value){
+        if(str_contains($meineStandardLinkeNavBarArray[$key][0], 'http://')) {
+            echo  "<li><a href = " . $meineStandardLinkeNavBarArray[$key][0] . ' target="_blank">' . $meineStandardLinkeNavBarArray[$key][1] . "</a></li>";
+        } else {
         echo  "<li><a href = " . $meineStandardLinkeNavBarArray[$key][0] . ">" . $meineStandardLinkeNavBarArray[$key][1] . "</a></li>";
+}
 }
 }
