@@ -10,7 +10,7 @@ session_start();
 
 // Standardwerte für Sessionvariablen setzen
 
-$_SESSION['veranstaltungen_sort']           = $_SESSION['veranstaltungen_sort']         ?? 'datum';
+$_SESSION['veranstaltungen_sort']           = $_SESSION['veranstaltungen_sort']         ?? 'vid';
 $_SESSION['veranstaltungen_dest']           = $_SESSION['veranstaltungen_dest']         ?? 'ASC';
 $_SESSION['veranstaltungen_seite']          = $_SESSION['veranstaltungen_seite']        ?? '1';
 $_SESSION['veranstaltungen_datum']          = $_SESSION['veranstaltungen_datum']        ?? '';
@@ -106,7 +106,7 @@ if (isset($_GET['sort'])) {
     $sort = trim(strip_tags($_GET['sort']));
     // übergebene Sortierung prüfen
     $felder = ['vid', 'name', 'beschreibung', 'datum', 'ort', 'adresse', 'stadt', 'plz'];
-    $sort = in_array($sort, $felder) ? $sort : 'datum';
+    $sort = in_array($sort, $felder) ? $sort : 'vid';
 
     // Prüfen, ob alte Sortierung der neuen entspricht, dann die Richtung umdrehen
     if ($sort == $_SESSION['veranstaltungen_sort']) {
