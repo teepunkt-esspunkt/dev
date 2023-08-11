@@ -18,6 +18,7 @@ include TEMPLATES . 'htmlkopf.phtml';
         <li><a href="#tag4">Donnerstag</a></li>
         <li><a href="#tag6">Freitag</a></li>
         <li><a href="#probleme">Probleme</a></li>
+        <li><a href="#verzeichnis">Verzeichnisstruktur</a></li>
     </ol>
 
     <h4>Teilnehmer:</h4>
@@ -46,12 +47,24 @@ include TEMPLATES . 'htmlkopf.phtml';
     <h4>Datenbankname: veranstaltungen</h4>
     <h4>Tabellennamen: veranstaltungen, orte</h4>
 
-    <h2 id="allgemeinstruktur">Allgemeine Strukturen:</h2>
+    <h2 id="allgemeinstruktur">Allgemeine Strukturen und Besonderheiten:</h2>
     <p>Wir trennen php und HTML und benutzen Templates wo wir können, um bei eventuellen Änderungen nicht dieselben Änderungen an verschiedenen Stellen vornehmen zu müssen.</p>
     <p>Bei einigen Seiten, bei denen der HTML oder der PHP - Teil nur sehr klein ausfällt, sparen wir uns das, da es im Endeffekt mehr Arbeit bringt durch weitere Feinanpassungen der Templates.</p>
     <p>Für unseren eigenen einfacheren Zugriff benennen wir die "index.php" in "pindex.php" um und genauso die "indexadmin.php" in "pindexadmin.php".</p>
     <p>Dies belassen wir auch bei der Abgabe so, da es für den Zugriff für erfahrene Benutzer mehr Vorteile als Nachteile hat.</p>
+    <p>Die Suche speichert eingegebene Werte in einer Session, danach werden per 
+GET-Befehl die Werte aus der Session geholt und in einer Schleife unter 
+anderem auf Sicherheit geprüft und in ein Array gepackt.</p>
+    <p>Zudem wird per htmlspecialchard verhindert, dass schädlicher HTML Code eindringen könnte. Das Gleiche gilt für den Adminbereich.</p>
+    <p>Kurz und Knapp:</p>
+    <ul>
+        <li>Benutzung Templatetechnik</li>
+        <li>Sicherheitsvorkehrungen Suche und Adminbereich</li>
+        <li>Datumsuche nach deutscher Schreibweise</li>
+        <li>PLZ Suche einzeln oder zwischen 2 Angaben</li>
+    </ul>
 
+    
     <h2 id="tag1">Montag: Datenbankstruktur - Einrichtung der Hauptseiten</h2>
 
     <h4>Vadim:</h4>
@@ -177,6 +190,51 @@ include TEMPLATES . 'htmlkopf.phtml';
         <p>Lösung: PHP-Code strukturiert durchgehen und nach Logikfehlern absuchen. (z.B. 
             Klammern , Schleifen, Bedingungen). SQL Dumps erzeugen um Fehler 
             aufzuspüren und dann effektiv in PHP zu lösen</p>
+        <h2 id="verzeichnis">Verzeichnisstruktur</h2>
+        
+        Hauptverzeichnis:
+        <ul>
+    <li>Images:
+        <ul>
+            <li>man.webp</li>
+            <li>barbar.webp</li>
+            <li>water.jpg</li>
+            <li>albert.jpg</li>
+        </ul>
+    </li>
+    <li>Templates:
+        <ul>
+            <li>aendernform.phtml</li>
+            <li>hinzufuegenform.phtml</li>
+            <li>htmlfuss.phtml</li>
+            <li>htmlkopf.phtml</li>
+            <li>inputfeld.phtml</li>
+            <li>paginator.phtml</li>
+            <li>spaltenanzahl.phtml</li>
+            <li>veranstaltungstabelleulti.phtml</li>
+        </ul>
+    </li>
+    <li>Rest:
+        <ul>
+            <li>base.css</li>
+            <li>doku.php</li>
+            <li>functions.php</li>
+            <li>functions_veranstaltungen.php</li>
+            <li>impressum.php</li>
+            <li>meineStandardLinkeNavBar.csv</li>
+            <li>pindex.php</li>
+            <li>pindexadmin.php</li>
+            <li>veranstaltungen_aendern.php</li>
+            <li>veranstaltungen_details.php</li>
+            <li>veranstaltungen_hinzufuegen.php</li>
+            <li>veranstaltungen_loeschen.php</li>
+            <li>veranstaltungen-aendern-ok.php</li>
+            <li>veranstaltungen-loeschen-ok.php</li>
+            <li>veranstaltungen-ok.php</li>
+        </ul>
+    </li>
+</ul>
+
 </div>
 <?php
 include TEMPLATES . 'htmlfuss.phtml';
