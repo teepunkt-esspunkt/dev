@@ -3,7 +3,7 @@
 }
 body{
     font-family: bahnschrift, arial, verdana, sans-serif;
-    background-image: url("images/feder.jpg");
+    background-image: url("images/water.jpg");
 }
 table{
     width: 90%;
@@ -22,10 +22,19 @@ table, td, th, thead{
 
 
 tr:hover{
-   background-color: rgba(255, 255, 0, 0.5);
+   background-color: rgba(255, 255, 0, 0.8);
 }
 tr:nth-child(even):hover {
-   background-color: rgba(255, 255, 0, 0.5);
+   background-color: rgba(255, 255, 0, 0.8);
+}
+tr:nth-child(odd):hover {
+   background-color: rgba(255, 255, 0, 0.8);
+}
+col:nth-child(odd):hover {
+   background-color: rgba(255, 255, 0, 0.8);
+}
+col:nth-child(even):hover {
+   background-color: rgba(255, 255, 0, 0.8);
 }
 
 td:hover::after { 
@@ -49,16 +58,16 @@ th:hover::after {
 }
 
 tr:nth-child(even){
-	background-color: rgba(240, 248, 255, 0.2);
+	background-color: rgba(110, 129, 122, 0.3);
 }
 tr:nth-child(odd){
-	background-color: rgba(240, 248, 255, 0.6);
+	background-color: rgba(240, 248, 255, 0.4);
 }
 col:nth-child(odd) {
-    background-color: rgba(95, 158, 160, 0.2);
+    background-color: rgba(95, 158, 160, 0.1);
 }
 col:nth-child(even) {
-    background-color: rgba(95, 158, 160, 0.8);
+    background-color: rgba(95, 158, 160, 0.4);
 }
 
 thead th{
@@ -70,13 +79,12 @@ th {
 }
 
 #wrapper {
-	width: 730px;
+	width: 780px;
 	margin: 0 auto;
 }
 
 header {
 	height: 100px;
-	background-image: url(../images/top_logo.jpg);
 }
 
 #top{
@@ -215,9 +223,8 @@ form {
 	width: 30em;
 	margin: 1.5em auto 0.5em;
 	border: 1px solid maroon;
-/*	background-color: aqua;*/
         background-color: #AAFFFF;
-	padding: 1.5em;
+	padding: 0.2em 1.5em 1.5em;
 }
 
 span{

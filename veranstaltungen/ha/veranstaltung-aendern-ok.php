@@ -7,7 +7,7 @@ session_start();
 $form = [];
 
 $vid = !empty($_GET['vid']) ? intval($_GET['vid']) : 0;
-//$vid                    = !empty($_POST['vid'])             ? intval($_POST['vid'])                     : 0;
+
 $form['name']           = !empty($_POST['name'])            ? trim(strip_tags($_POST['name']))          : '';
 $form['beschreibung']   = !empty($_POST['beschreibung'])    ? trim(strip_tags($_POST['beschreibung']))  : '';
 $form['oid']            = !empty($_POST['oid'])             ? trim(strip_tags($_POST['oid']))           : '';
