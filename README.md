@@ -1,1 +1,1 @@
-Ein Veranstaltungskalender
+Ein Veranstaltungskalender mit SQL Datenbank
